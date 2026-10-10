@@ -1,0 +1,39 @@
+# Ambientes Python e caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Configuração local e credenciais
+config/gramame.yaml
+config/gramame.colab.yaml
+.env
+.env.*
+
+# Dados geoespaciais e resultados gerados
+dados/
+data/
+output/
+qgis/dados/
+*.gpkg
+*.gpkg-shm
+*.gpkg-wal
+*.tif
+*.tiff
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.zip
+*.7z
+*.rar
+
+# Arquivos do sistema e IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

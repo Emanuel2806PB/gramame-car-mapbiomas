@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "Se você utilizar este código, cite o Trabalho de Conclusão de Curso associado."
+title: "Convergência espacial entre a vegetação nativa declarada no CAR e o MapBiomas na bacia do rio Gramame"
+type: software
+authors:
+  - family-names: "Soares"
+    given-names: "Emanuel Gomes"
+version: 0.1.0
+date-released: 2026-10-10
+repository-code: "https://github.com/Emanuel2806PB/gramame-car-mapbiomas"
+abstract: >-
+  Pipeline geoespacial reproduzível para comparar a vegetação nativa declarada
+  no Cadastro Ambiental Rural com classes naturais do MapBiomas Coleção 11 na
+  bacia hidrográfica do rio Gramame, Paraíba.
+keywords:
+  - Cadastro Ambiental Rural
+  - MapBiomas
+  - bacia do rio Gramame
+  - geoprocessamento
+  - análise espacial
+license: null

@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gramame-car-mapbiomas"
+version = "0.1.0"
+description = "Pipeline reproduzível para comparar vegetação nativa declarada no CAR com o MapBiomas."
+requires-python = ">=3.11"
+dependencies = [
+  "geopandas>=1.0",
+  "matplotlib>=3.9",
+  "numpy>=2.0",
+  "pandas>=2.2",
+  "pyproj>=3.6",
+  "PyYAML>=6.0",
+  "rasterio>=1.4",
+  "shapely>=2.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+gramame-car-mapbiomas = "gramame_car_mapbiomas.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
