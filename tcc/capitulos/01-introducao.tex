@@ -2,17 +2,19 @@
 
 \section{Introdução}
 
-O Cadastro Ambiental Rural (CAR) foi instituído pela Lei n. 12.651/2012 como instrumento nacional de integração das informações ambientais dos imóveis rurais. O artigo 29 o define como ``registro público eletrônico de âmbito nacional, obrigatório para todos os imóveis rurais'' \cite[art. 29]{brasil2012}. A mesma lei associa a base ao controle, ao monitoramento, ao planejamento ambiental e econômico e ao combate ao desmatamento. Embora essas finalidades fundamentem a utilização dos dados em análises ambientais e territoriais, é necessário considerar que as informações cadastradas são autodeclaradas e podem apresentar inconsistências em relação às condições observadas em campo.
+O Cadastro Ambiental Rural (CAR) foi instituído pela Lei n. 12.651/2012 como instrumento de integração das informações ambientais dos imóveis rurais. O artigo 29 o define como ``registro público eletrônico de âmbito nacional, obrigatório para todos os imóveis rurais'' \cite[art. 29]{brasil2012}. A mesma lei vincula o cadastro ao controle, ao monitoramento, ao planejamento ambiental e econômico e ao combate ao desmatamento. Essas finalidades justificam o emprego da base em análises ambientais e territoriais. Entretanto, as informações são autodeclaradas e podem apresentar imprecisões geométricas, sobreposições ou diferenças em relação à cobertura da terra observada em outras fontes.
 
-O recibo confirma a inscrição e o envio das informações, não a conformidade ambiental individual. Em orientação oficial, o Serviço Florestal Brasileiro esclarece que ``as informações declaradas serão objeto de análise e validação pelo órgão estadual competente'' \cite{car2026}. Nesse contexto, a comparação espacial realizada neste estudo permite identificar possíveis divergências entre a vegetação nativa declarada e a cobertura da terra mapeada, contribuindo para a identificação de áreas que demandam verificação, sem substituir a análise técnica e administrativa dos cadastros pelos órgãos competentes.
+O recibo comprova a inscrição e o envio das informações, mas não atesta a conformidade ambiental do imóvel. Em orientação oficial, o Serviço Florestal Brasileiro esclarece que ``as informações declaradas serão objeto de análise e validação pelo órgão estadual competente'' \cite{car2026}. Desse modo, o exame cartográfico dos dados públicos pode indicar concordâncias e divergências espaciais, mas não substitui a análise técnica e administrativa realizada pelo órgão ambiental competente.
 
-A abrangência do CAR favorece análises territoriais em larga escala. Entretanto, a presença de geometrias sobrepostas, duplicadas ou inválidas exige controle de qualidade antes do cálculo de áreas. \citeonline{matias2024} mostraram que as sobreposições entre imóveis declarados interferem em operações de Sistemas de Informação Geográfica e demandam tratamento topológico explícito. Estudos com geotecnologias também demonstram o potencial do cadastro para análises territoriais, desde que as limitações de origem e qualidade sejam reconhecidas \cite{santos2021}.
+A abrangência territorial do CAR possibilita análises em diferentes unidades espaciais, desde que a qualidade das geometrias seja previamente examinada. Feições inválidas, duplicadas ou sobrepostas podem alterar os resultados de recortes, interseções e cálculos de área. \citeonline{matias2024} demonstraram que as sobreposições entre imóveis declarados interferem nas operações realizadas em Sistemas de Informação Geográfica e requerem tratamento topológico explícito. Aplicações baseadas em geotecnologias também evidenciam a utilidade do cadastro para diagnósticos territoriais, condicionada ao reconhecimento das limitações de origem e qualidade dos dados \cite{santos2021}.
 
-Produtos de sensoriamento remoto constituem referência temática independente para examinar a coerência espacial das declarações. O MapBiomas reconstrói séries anuais de cobertura e uso da terra a partir de imagens Landsat e processamento em nuvem \cite{souza2020}. A Coleção 11 disponibiliza mapas anuais com resolução espacial nominal de 30 m \cite{mapbiomas2026}. A comparação entre a vegetação declarada e as classes naturais permite identificar concordâncias e divergências, mas não elimina diferenças de data, resolução, legenda, método e finalidade.
+Produtos de cobertura e uso da terra derivados de sensoriamento remoto oferecem uma fonte temática complementar para examinar a distribuição espacial das declarações. O MapBiomas produz séries anuais a partir de imagens Landsat e processamento em nuvem \cite{souza2020}. A Coleção 11 disponibiliza mapas com resolução espacial nominal de 30 m \cite{mapbiomas2026}. A comparação entre os remanescentes de vegetação nativa declarados no CAR e as classes naturais desse produto permite quantificar coincidências e divergências. Contudo, o resultado deve ser interpretado à luz das diferenças de data, resolução, legenda, método de produção e finalidade de cada base.
 
-A compatibilidade entre mapas depende da harmonização das classes e dos procedimentos de classificação. \citeonline{neves2020} demonstraram que diferenças de legenda afetam o grau de concordância entre produtos de cobertura da terra. Assim, a comparação espacial permite identificar concordâncias e divergências entre as bases analisadas, considerando que os dados foram produzidos por metodologias distintas e estão sujeitos a limitações próprias.
+A compatibilidade entre bases temáticas depende da correspondência entre as classes e dos critérios empregados na comparação. \citeonline{neves2020} demonstraram que diferenças de legenda afetam o grau de concordância entre produtos de cobertura da terra. Por essa razão, o agrupamento das classes naturais e a harmonização espacial devem ser definidos de forma explícita. O índice resultante expressa a convergência entre as representações analisadas, sem equivaler à avaliação de acurácia do MapBiomas ou à validação jurídica das informações do CAR.
 
-A bacia hidrográfica do rio Gramame foi adotada como unidade de estudo por sua importância para o litoral sul da Paraíba e para o abastecimento da Região Metropolitana de João Pessoa. O Plano de Recursos Hídricos das Bacias Hidrográficas do Litoral Sul reconhece a relevância estratégica do sistema Gramame e emprega geoprocessamento na definição de prioridades de gestão \cite{aesa2025}. O recorte hidrográfico permite examinar a paisagem como unidade ambiental, sem restringir a análise aos limites municipais.
+A bacia hidrográfica do rio Gramame foi adotada como unidade de estudo em razão de sua relevância para o litoral sul da Paraíba e para o abastecimento da Região Metropolitana de João Pessoa. O Plano de Recursos Hídricos das Bacias Hidrográficas do Litoral Sul reconhece a importância estratégica do sistema Gramame e utiliza informações geoespaciais na definição de prioridades de gestão \cite{aesa2025}. O recorte por bacia também permite examinar a continuidade espacial dos processos ambientais, independentemente dos limites político-administrativos municipais.
+
+Diante disso, investigou-se em que medida a vegetação nativa declarada no CAR coincide espacialmente com as classes naturais mapeadas pelo MapBiomas em 2025 na bacia do rio Gramame. A análise quantificou as concordâncias e divergências, com controle das sobreposições entre polígonos e registro das limitações das bases. As divergências não foram interpretadas automaticamente como irregularidades ambientais.
 
 \subsection{Objetivo geral}
 
@@ -20,14 +22,12 @@ Caracterizar a distribuição espacial da vegetação nativa declarada no Cadast
 
 \subsection{Objetivos específicos}
 
-Como objetivos específicos, buscou-se:
-
 \begin{itemize}
     \item verificar a qualidade geométrica das bases de dados utilizadas;
     \item quantificar a área de vegetação nativa declarada, considerando as sobreposições entre polígonos;
     \item calcular a proporção da vegetação declarada coincidente com as classes naturais do MapBiomas;
     \item identificar as classes de cobertura e uso da terra associadas às divergências espaciais; e
-    \item sistematizar um procedimento reproduzível para apoiar análises e verificações técnicas.
+    \item documentar os procedimentos empregados no tratamento das geometrias e na comparação espacial das bases.
 \end{itemize}
 
 \newpage
