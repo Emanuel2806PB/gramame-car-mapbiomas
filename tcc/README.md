@@ -26,3 +26,15 @@ O projeto está organizado como TCC monográfico: elementos pré-textuais, texto
 - data da defesa e composição da banca;
 - revisão final das citações e confirmação de que toda referência listada foi citada;
 - decisão sobre dedicatória, agradecimentos, epígrafe, glossário, apêndices e anexos.
+
+## Revisão por capítulo no TeXstudio
+
+O documento mestre é `main.tex`. O texto acadêmico está separado em `capitulos/`:
+
+- `01-introducao.tex`
+- `02-referencial-teorico.tex`
+- `03-materiais-e-metodos.tex`
+- `04-resultados-e-discussao.tex`
+- `05-consideracoes-finais.tex`
+
+Cada capítulo contém a diretiva `% !TeX root = ../main.tex`. Assim, ao abrir um capítulo no TeXstudio e executar a compilação, o programa utiliza automaticamente o documento mestre e gera o TCC completo. Não compile os capítulos isoladamente com `xelatex`; eles dependem do preâmbulo e dos elementos pré-textuais de `main.tex`.

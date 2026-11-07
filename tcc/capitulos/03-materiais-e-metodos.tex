@@ -1,0 +1,260 @@
+% !TeX root = ../main.tex
+
+\section{Materiais e métodos}
+
+\subsection{Caracterização da área de estudo}
+
+A área de estudo corresponde à bacia hidrográfica do rio Gramame, no litoral sul da Paraíba. O limite hidrográfico utilizado foi obtido junto à Agência Executiva de Gestão das Águas do Estado da Paraíba. A bacia possui aproximadamente 589,63 km² e intercepta Alhandra, Conde, Cruz do Espírito Santo, João Pessoa, Pedras de Fogo, Santa Rita e São Miguel de Taipu. As análises de área e distância foram realizadas em SIRGAS 2000 / UTM zona 25S, código EPSG:31985.
+
+A Figura~\ref{fig:localizacao} apresenta a localização em três níveis: Brasil e estado da Paraíba; estado e posição da bacia; e detalhe da bacia com os municípios interceptados.
+
+\begin{figure}[H]
+\centering
+\caption{Localização da bacia hidrográfica do rio Gramame}
+\mapaoumarcador{mapa_localizacao_bacia_rio_gramame.png}{\textwidth}
+\fontefigura{Elaboração própria (2026) com dados de IBGE, Malha Municipal Digital 2025; AESA, bacias hidrográficas da Paraíba.}
+\label{fig:localizacao}
+\end{figure}
+
+\subsection{Fontes e características dos dados}
+
+Foram integradas quatro fontes públicas de dados geoespaciais. Os dados do SICAR compreenderam os limites dos imóveis rurais e os remanescentes de vegetação nativa declarados pelos responsáveis pelos cadastros. O limite da bacia hidrográfica do rio Gramame foi obtido na AESA, enquanto a Malha Municipal Digital do IBGE foi utilizada como referência territorial. O MapBiomas Coleção 11 forneceu os dados matriciais de cobertura e uso da terra referentes ao ano de 2025, com resolução espacial nominal de 30 m. As fontes utilizadas, suas características, aplicações no estudo e respectivas datas de aquisição estão apresentadas na Tabela~\ref{tab:dados}.
+
+
+\begin{table}[H]
+\centering
+\caption{Dados geoespaciais empregados no estudo}
+\label{tab:dados}
+
+\begingroup
+\small
+\SingleSpacing
+
+% Espaçamento vertical
+\renewcommand{\arraystretch}{1.45}
+
+% Espaçamento horizontal
+\setlength{\tabcolsep}{5pt}
+
+\begin{tabularx}{\textwidth}{
+>{\RaggedRight\arraybackslash}p{2.9cm}
+>{\RaggedRight\arraybackslash}p{1.9cm}
+>{\RaggedRight\arraybackslash}X
+>{\centering\arraybackslash}p{2.0cm}
+}
+\toprule
+
+\textbf{Dado} &
+\textbf{Fonte} &
+\textbf{Características e uso} &
+\textbf{Aquisição} \\
+
+\midrule
+
+Imóveis rurais e vegetação declarada &
+SICAR &
+Vetores autodeclarados; recorte cadastral, controle topológico e cálculo de áreas. &
+3 out. 2026 \\
+
+Limite da bacia hidrográfica do rio Gramame &
+AESA &
+Vetor oficial; delimitação da unidade territorial de análise. &
+3 out. 2026 \\
+
+Municípios e unidades da Federação &
+IBGE &
+Malhas territoriais de 2025; referência cartográfica em SIRGAS 2000. &
+3 e 7 out. 2026 \\
+
+Cobertura e uso da terra &
+MapBiomas &
+Coleção 11 (2025); raster categórico com resolução espacial de 30 m. &
+3 out. 2026 \\
+
+\bottomrule
+\end{tabularx}
+
+\vspace{0.2cm}
+
+\fontefigura{Elaboração própria (2026), com dados do SICAR, AESA, IBGE e MapBiomas.}
+
+\endgroup
+\end{table}
+
+As datas de aquisição foram registradas para identificar as versões das bases utilizadas, considerando a possibilidade de atualizações e retificações nos dados do SICAR e de novas publicações do MapBiomas.
+
+\subsection{Sistema de referência e harmonização espacial}
+
+Os sistemas de referência das bases vetoriais foram verificados e padronizados para SIRGAS 2000 / UTM zona 25S (EPSG:31985), utilizado para os cálculos de área e as análises espaciais. O raster do MapBiomas foi recortado para a área de estudo, mantendo sua resolução espacial original de 30 m. Nos mapas de localização, foram utilizadas coordenadas geográficas em SIRGAS 2000, enquanto os produtos analíticos foram apresentados em coordenadas projetadas.
+
+\subsection{Ambiente computacional}
+
+O processamento e a análise dos dados geoespaciais foram realizados com o auxílio do Python e do QGIS. O Python foi utilizado na automação das operações espaciais e no cálculo das áreas, enquanto o QGIS auxiliou na manipulação das camadas, na análise dos resultados e na elaboração dos produtos cartográficos. As ferramentas computacionais e suas respectivas versões estão apresentadas na Tabela~\ref{tab:software}.
+
+
+\begin{table}[H]
+\centering
+\caption{Ferramentas computacionais utilizadas no processamento dos dados}
+\label{tab:software}
+
+\begingroup
+\small
+\SingleSpacing
+
+% Espaçamento vertical entre as linhas
+\renewcommand{\arraystretch}{1.40}
+
+% Espaçamento horizontal entre as colunas
+\setlength{\tabcolsep}{7pt}
+
+\begin{tabularx}{\textwidth}{
+>{\RaggedRight\arraybackslash}p{3.0cm}
+>{\centering\arraybackslash}p{2.5cm}
+>{\RaggedRight\arraybackslash}X
+}
+\toprule
+\textbf{Componente} &
+\textbf{Versão} &
+\textbf{Finalidade} \\
+\midrule
+
+Python &
+3.13.9 &
+Automação e execução dos procedimentos de processamento espacial \\
+
+GeoPandas &
+1.1.2 &
+Leitura, recorte, reprojeção e análise de dados vetoriais \\
+
+Rasterio &
+1.5.0 &
+Leitura, recorte e processamento de dados matriciais \\
+
+Shapely &
+2.1.2 &
+Validação, correção, união e operações geométricas \\
+
+QGIS &
+3.44.3 &
+Conferência dos dados, elaboração dos mapas e exportação cartográfica \\
+
+NumPy e Matplotlib &
+2.3.2 e 3.10.6 &
+Cálculos matriciais e elaboração de gráficos auxiliares \\
+
+\bottomrule
+\end{tabularx}
+
+\vspace{0.20cm}
+
+\fontefigura{Elaboração própria (2026).}
+
+\endgroup
+\end{table}
+
+\subsection{Preparação e controle de qualidade}
+
+As camadas foram recortadas conforme os limites da bacia hidrográfica do rio Gramame. Em seguida, foram verificadas a existência de geometrias vazias e inválidas. A função \textit{make valid} foi aplicada às geometrias inválidas, e a camada de imóveis foi restringida aos tipos poligonais \textit{Polygon} e \textit{MultiPolygon}, compatíveis com as operações de área empregadas no estudo.
+
+A duplicidade geométrica foi verificada pela comparação da representação normalizada de cada geometria. Duas ou mais feições foram marcadas quando possuíam exatamente a mesma geometria, ainda que apresentassem códigos cadastrais diferentes. O indicador de duplicidade contabilizou todos os registros pertencentes a esses grupos, e não a quantidade de feições eliminadas. Os registros foram preservados para manter a rastreabilidade cadastral; a dupla contagem de área foi evitada posteriormente pela união geométrica.
+
+Para quantificar a vegetação nativa declarada, foram calculadas as áreas pelo somatório individual dos polígonos e pela união geométrica das feições. A diferença entre esses valores permitiu identificar a área contabilizada mais de uma vez devido às sobreposições. Nas análises espaciais, foi considerada a área resultante da união dos polígonos, evitando a dupla contagem. Esse procedimento também considera os problemas topológicos discutidos por \citeonline{matias2024}.
+
+\subsection{Classificação temática e cálculo do índice}
+
+
+A vegetação nativa declarada no CAR foi convertida para o formato raster, utilizando a mesma grade espacial do MapBiomas, com resolução de 30 m. A seleção das classes naturais foi conferida na legenda oficial da Coleção 11 do MapBiomas, no nível 2 da hierarquia temática. Foram incluídos os códigos 3 (Formação Florestal), 6 (Floresta Alagável), 4 (Formação Savânica), 7 (Savana Alagada, classe beta), 5 (Mangue), 49 (Restinga Arbórea), 11 (Campo Alagado e Área Pantanosa), 77 (Formação Herbácea Arbustiva), 12 (Formação Campestre), 84 (Marisma, classe beta), 50 (Restinga Herbácea ou Arbustiva), 32 (Apicum) e 29 (Afloramento Rochoso). Esses códigos correspondem às subclasses dos agrupamentos naturais ``Formação Florestal'' e ``Vegetação Herbácea e Arbustiva''; não foram incluídas classes de agropecuária, áreas não vegetadas ou corpos d'água \cite{mapbiomaslegenda2026}.
+
+O índice de convergência espacial (IC) foi calculado pela Equação~\ref{eq:ic}:
+
+\begin{equation}
+IC = \frac{A_{CAR \cap NAT}}{A_{CAR, válida}} \times 100
+\label{eq:ic}
+\end{equation}
+
+\noindent em que $A_{CAR \cap NAT}$ corresponde à área de vegetação declarada coincidente com as classes naturais do MapBiomas, e $A_{CAR, válida}$ representa a área dos pixels válidos do MapBiomas localizados dentro da máscara das declarações. O índice foi expresso em porcentagem.
+
+Também foram quantificadas as áreas declaradas que não coincidiram com classes naturais e as áreas de cobertura natural identificadas pelo MapBiomas dentro dos imóveis rurais, mas fora dos polígonos de vegetação declarada. Na conversão dos vetores para raster, foi adotado o critério do centro do pixel, mantendo a resolução espacial de 30 m.
+
+\subsection{Validação e rastreabilidade}
+
+A consistência dos dados e dos resultados foi avaliada por meio de procedimentos estruturais, geométricos, quantitativos e cartográficos, apresentados na Tabela~\ref{tab:validacao}. As análises incluíram a verificação das geometrias, a conferência dos cálculos de área e a inspeção dos resultados no QGIS. Também foram realizados testes automatizados com dados sintéticos para verificar as operações de união geométrica e cruzamento raster-vetor.
+
+
+\begin{table}[H]
+\centering
+\caption{Procedimentos de verificação da consistência dos dados e resultados}
+\label{tab:validacao}
+
+\begingroup
+\small
+\SingleSpacing
+
+% Espaçamento vertical
+\renewcommand{\arraystretch}{1.45}
+
+% Espaçamento horizontal
+\setlength{\tabcolsep}{6pt}
+
+\begin{tabularx}{\textwidth}{
+>{\RaggedRight\arraybackslash}p{2.2cm}
+>{\RaggedRight\arraybackslash}X
+>{\RaggedRight\arraybackslash}p{3.6cm}
+}
+\toprule
+
+\textbf{Nível} &
+\textbf{Procedimento} &
+\textbf{Evidência} \\
+
+\midrule
+
+Estrutural &
+Conferência dos campos, sistemas de referência, extensão espacial e quantidade de feições &
+Inventário dos dados e metadados \\
+
+Geométrico &
+Identificação de geometrias ausentes, vazias, inválidas e duplicadas, com verificação das correções &
+Relatório de qualidade das camadas \\
+
+Quantitativo &
+Comparação entre áreas vetoriais e rasterizadas e conferência dos indicadores calculados &
+Tabelas de áreas e indicadores \\
+
+Cartográfico &
+Conferência das sobreposições, limites espaciais e elementos dos mapas &
+Projeto QGIS e mapas finais \\
+
+\bottomrule
+\end{tabularx}
+
+\vspace{0.20cm}
+
+\fontefigura{Elaboração própria (2026).}
+
+\endgroup
+\end{table}
+
+Na verificação quantitativa, foi conferido se a soma das áreas classificadas como naturais e não naturais correspondia à área válida da máscara rasterizada. Também foram comparadas as áreas obtidas pelos procedimentos vetorial e matricial, considerando as diferenças associadas à representação dos limites dos polígonos em células de 30 m.
+
+\subsection{Fluxo metodológico e reprodutibilidade}
+
+As etapas da pesquisa foram organizadas em um fluxograma, desde a obtenção e preparação dos dados até o cruzamento espacial entre o CAR e o MapBiomas e a análise dos resultados. O procedimento compreendeu a verificação das bases geoespaciais, o tratamento das geometrias, o cálculo das áreas e a identificação das concordâncias e divergências espaciais, conforme apresentado na Figura~\ref{fig:fluxo}.
+
+\begin{figure}[H]
+\centering
+\caption{Fluxo metodológico da pesquisa}
+\mapaoumarcador{fluxograma_metodologico.png}{0.95\textwidth}
+\fontefigura{Elaboração própria (2026).}
+\label{fig:fluxo}
+\end{figure}
+
+Os procedimentos foram desenvolvidos com o auxílio do Python e do QGIS, permitindo a reprodução das análises a partir das bases de dados e dos critérios metodológicos adotados.
+
+\subsection{Limitações metodológicas}
+
+A comparação entre o CAR e o MapBiomas apresenta limitações relacionadas às características das bases utilizadas. Enquanto o CAR reúne informações autodeclaradas, com diferentes datas de cadastro e níveis de precisão espacial, o MapBiomas apresenta uma classificação da cobertura e uso da terra com resolução de 30 m, sujeita a incertezas de classificação. Essas diferenças podem influenciar os resultados, principalmente nas bordas dos polígonos e em fragmentos estreitos de vegetação. Além disso, as informações declaradas no CAR não correspondem necessariamente às condições da cobertura da terra em 2025.
+
+A concordância espacial entre as bases não comprova a regularidade ambiental dos imóveis, assim como as divergências identificadas não representam, necessariamente, erros cadastrais. O estudo também não incluiu análises temporais, imagens de maior resolução ou verificações em campo. Dessa forma, os resultados permitem identificar áreas que merecem uma análise mais detalhada, mas não substituem os procedimentos de avaliação realizados pelos órgãos ambientais competentes.
+
+\newpage

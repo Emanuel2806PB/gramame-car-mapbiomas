@@ -1,0 +1,33 @@
+% !TeX root = ../main.tex
+
+\section{Introdução}
+
+O Cadastro Ambiental Rural (CAR) foi instituído pela Lei n. 12.651/2012 como instrumento nacional de integração das informações ambientais dos imóveis rurais. O artigo 29 o define como ``registro público eletrônico de âmbito nacional, obrigatório para todos os imóveis rurais'' \cite[art. 29]{brasil2012}. A mesma lei associa a base ao controle, ao monitoramento, ao planejamento ambiental e econômico e ao combate ao desmatamento. Embora essas finalidades fundamentem a utilização dos dados em análises ambientais e territoriais, é necessário considerar que as informações cadastradas são autodeclaradas e podem apresentar inconsistências em relação às condições observadas em campo.
+
+O recibo confirma a inscrição e o envio das informações, não a conformidade ambiental individual. Em orientação oficial, o Serviço Florestal Brasileiro esclarece que ``as informações declaradas serão objeto de análise e validação pelo órgão estadual competente'' \cite{car2026}. Nesse contexto, a comparação espacial realizada neste estudo permite identificar possíveis divergências entre a vegetação nativa declarada e a cobertura da terra mapeada, contribuindo para a identificação de áreas que demandam verificação, sem substituir a análise técnica e administrativa dos cadastros pelos órgãos competentes.
+
+A abrangência do CAR favorece análises territoriais em larga escala. Entretanto, a presença de geometrias sobrepostas, duplicadas ou inválidas exige controle de qualidade antes do cálculo de áreas. \citeonline{matias2024} mostraram que as sobreposições entre imóveis declarados interferem em operações de Sistemas de Informação Geográfica e demandam tratamento topológico explícito. Estudos com geotecnologias também demonstram o potencial do cadastro para análises territoriais, desde que as limitações de origem e qualidade sejam reconhecidas \cite{santos2021}.
+
+Produtos de sensoriamento remoto constituem referência temática independente para examinar a coerência espacial das declarações. O MapBiomas reconstrói séries anuais de cobertura e uso da terra a partir de imagens Landsat e processamento em nuvem \cite{souza2020}. A Coleção 11 disponibiliza mapas anuais com resolução espacial nominal de 30 m \cite{mapbiomas2026}. A comparação entre a vegetação declarada e as classes naturais permite identificar concordâncias e divergências, mas não elimina diferenças de data, resolução, legenda, método e finalidade.
+
+A compatibilidade entre mapas depende da harmonização das classes e dos procedimentos de classificação. \citeonline{neves2020} demonstraram que diferenças de legenda afetam o grau de concordância entre produtos de cobertura da terra. Assim, a comparação espacial permite identificar concordâncias e divergências entre as bases analisadas, considerando que os dados foram produzidos por metodologias distintas e estão sujeitos a limitações próprias.
+
+A bacia hidrográfica do rio Gramame foi adotada como unidade de estudo por sua importância para o litoral sul da Paraíba e para o abastecimento da Região Metropolitana de João Pessoa. O Plano de Recursos Hídricos das Bacias Hidrográficas do Litoral Sul reconhece a relevância estratégica do sistema Gramame e emprega geoprocessamento na definição de prioridades de gestão \cite{aesa2025}. O recorte hidrográfico permite examinar a paisagem como unidade ambiental, sem restringir a análise aos limites municipais.
+
+\subsection{Objetivo geral}
+
+Caracterizar a distribuição espacial da vegetação nativa declarada no Cadastro Ambiental Rural (CAR) na bacia hidrográfica do rio Gramame, na Paraíba, e avaliar sua convergência espacial com as classes naturais do MapBiomas para o ano de 2025.
+
+\subsection{Objetivos específicos}
+
+Como objetivos específicos, buscou-se:
+
+\begin{itemize}
+    \item verificar a qualidade geométrica das bases de dados utilizadas;
+    \item quantificar a área de vegetação nativa declarada, considerando as sobreposições entre polígonos;
+    \item calcular a proporção da vegetação declarada coincidente com as classes naturais do MapBiomas;
+    \item identificar as classes de cobertura e uso da terra associadas às divergências espaciais; e
+    \item sistematizar um procedimento reproduzível para apoiar análises e verificações técnicas.
+\end{itemize}
+
+\newpage

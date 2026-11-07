@@ -1,0 +1,139 @@
+% !TeX root = ../main.tex
+
+\section{Referencial teórico}
+
+\subsection{Cadastro Ambiental Rural e Sistema de Cadastro Ambiental Rural}
+
+A Lei n. 12.651/2012 instituiu o CAR no âmbito do Sistema Nacional de Informação sobre Meio Ambiente. O cadastro reúne informações do perímetro do imóvel rural, das Áreas de Preservação Permanente, das áreas de uso restrito, das áreas consolidadas, das Reservas Legais e dos remanescentes de vegetação nativa \cite{brasil2012}. A organização dessas informações em uma base nacional amplia as possibilidades de controle e planejamento ambiental, mas a natureza declaratória da inscrição exige análise posterior pelo poder público.
+
+O Decreto n. 7.830/2012 regulamentou o SICAR como sistema eletrônico nacional destinado ao gerenciamento das informações ambientais dos imóveis rurais. Entre seus objetivos estão receber e integrar os dados do CAR, controlar e acompanhar a manutenção e a regularização da vegetação nativa e disponibilizar informações públicas de natureza ambiental \cite{brasil2012decreto}. CAR e SICAR, portanto, não são sinônimos: o primeiro é o registro ambiental do imóvel, enquanto o segundo corresponde à infraestrutura de informação que recebe, organiza e permite analisar as declarações.
+
+A emissão do recibo comprova que a inscrição foi transmitida ao sistema, mas não representa aprovação da localização da Reserva Legal nem reconhecimento de propriedade ou posse. A análise e a validação cabem ao órgão ambiental estadual competente \cite{car2026}. Essa distinção é essencial para o presente estudo, pois o cruzamento cartográfico identifica coerência ou divergência entre bases, sem produzir decisão sobre regularidade ambiental.
+
+As informações geoespaciais declaradas são produzidas em condições heterogêneas. A delimitação pode resultar de levantamento de campo, interpretação de imagens ou vetorização sobre bases com diferentes escalas e datas. Além disso, retificações posteriores alteram a geometria disponível no sistema. Por isso, avaliações territoriais precisam registrar a data de aquisição, verificar o sistema de referência e identificar sobreposições ou duplicidades antes de calcular áreas.
+
+\subsection{Estrutura das camadas geoespaciais do CAR}
+
+A inscrição organiza dados documentais e geoespaciais em conjuntos temáticos. A camada de área do imóvel representa o perímetro da propriedade ou posse rural e funciona como limite de referência para as demais feições. A geometria declarada no CAR tem finalidade ambiental e não substitui o georreferenciamento exigido para certificação fundiária, tampouco constitui título de domínio.
+
+Os remanescentes de vegetação nativa correspondem aos fragmentos declarados com cobertura vegetal natural. Essa camada pode se sobrepor a APP e Reserva Legal, pois os temas descrevem atributos diferentes de uma mesma área: cobertura existente, proteção decorrente da localização e destinação jurídica. A Instrução Normativa MMA n. 2/2014 determina que remanescentes existentes após 22 de julho de 2008 não perdem essa classificação em razão de intervenção não autorizada \cite{mma2014}.
+
+A utilização das informações do CAR em análises territoriais exige atenção à qualidade das geometrias declaradas. As delimitações podem apresentar sobreposições, duplicidades e inconsistências topológicas que interferem diretamente nos cálculos de área e nas operações de geoprocessamento. \citeonline{matias2024} discutem essas limitações e apresentam procedimentos voltados ao tratamento de sobreposições em imóveis rurais cadastrados.
+
+As dificuldades de integração de bases territoriais também são discutidas por \citeonline{sparovek2019}, que analisaram informações fundiárias brasileiras e identificaram sobreposições entre diferentes categorias de registro territorial. Embora a pesquisa apresente uma abordagem fundiária mais ampla, seus resultados evidenciam a importância da consistência espacial na utilização de bases cadastrais.
+
+Nesse sentido, a análise de remanescentes de vegetação nativa declarados deve considerar a possibilidade de coincidência geométrica entre diferentes feições. O cálculo da área resultante da união dos polígonos permite evitar a dupla contagem das superfícies sobrepostas, tornando a quantificação mais adequada à representação espacial do conjunto analisado.
+
+As principais camadas ambientais declaradas no CAR, bem como suas respectivas características e finalidades, estão apresentadas na Tabela~\ref{tab:camadascar}.
+
+\begin{table}[H]
+\centering
+\caption{Principais camadas geoespaciais declaradas no CAR}
+\label{tab:camadascar}
+
+\begingroup
+\small
+\SingleSpacing
+
+% Espaçamento vertical entre as linhas
+\renewcommand{\arraystretch}{1.35}
+
+% Espaçamento horizontal entre as colunas
+\setlength{\tabcolsep}{8pt}
+
+\begin{tabularx}{\textwidth}{
+>{\RaggedRight\arraybackslash}p{4.1cm}
+>{\arraybackslash}X
+}
+\toprule
+\textbf{Camada} & \textbf{Conteúdo representado} \\
+\midrule
+
+Área do imóvel rural &
+Perímetro da propriedade ou posse usado como referência espacial do cadastro \\
+
+Remanescente de vegetação nativa &
+Fragmentos declarados de vegetação nativa existentes no imóvel. \\
+
+Área de Preservação Permanente &
+Áreas protegidas em razão de sua localização, como margens de cursos d'água, entorno de nascentes e outras hipóteses legais. \\
+
+Reserva Legal &
+Área localizada no interior do imóvel destinada à conservação e ao uso sustentável, declarada como existente, proposta ou vinculada a situação administrativa específica. \\
+
+Área de uso restrito &
+Espaços submetidos a regras próprias de uso e conservação previstas na legislação. \\
+
+Área rural consolidada &
+Área com ocupação antrópica preexistente a 22 de julho de 2008, nos termos da Lei n. 12.651/2012. \\
+
+Servidão administrativa e utilidade pública &
+Faixas ou áreas afetadas por infraestrutura e outras finalidades públicas que interferem na área disponível do imóvel. \\
+
+Hidrografia e nascentes &
+Feições lineares, poligonais ou pontuais usadas na caracterização ambiental e na delimitação de áreas protegidas. \\
+
+\bottomrule
+\end{tabularx}
+
+\vspace{0.25cm}
+\fontefigura{Elaboração própria (2026) com informações de Brasil (2012, 2014) e SICAR.}
+
+\endgroup
+\end{table}
+
+As camadas ambientais do CAR não representam necessariamente categorias espaciais independentes, uma vez que uma mesma área pode estar associada a diferentes classificações. Por exemplo, um fragmento de vegetação nativa pode estar localizado em Área de Preservação Permanente (APP) e, simultaneamente, integrar a Reserva Legal (RL) do imóvel. Dessa forma, a quantificação das áreas requer atenção às possíveis sobreposições, a fim de evitar a dupla contagem. Neste estudo, a camada de imóveis rurais foi utilizada para delimitar o universo cadastral da bacia hidrográfica do rio Gramame, enquanto os polígonos de remanescentes de vegetação nativa constituíram a base da comparação espacial com o MapBiomas. As demais categorias ambientais, como APP, Reserva Legal e áreas de uso restrito, não foram consideradas individualmente na análise, por não integrarem o objetivo específico da comparação realizada.
+
+\subsection{Etapas de inscrição, análise e retificação}
+
+O cadastramento inicia-se com a identificação do cadastrante e do proprietário ou possuidor, seguida da inclusão dos documentos de comprovação da propriedade ou posse. Na etapa geoespacial são informados o perímetro do imóvel e, quando existentes, os remanescentes de vegetação nativa, as APP, as áreas de uso restrito, as áreas consolidadas e a Reserva Legal \cite{mma2014,car2026}. O módulo pré-preenchido pode apresentar informações recuperadas de bases oficiais, mas o declarante deve revisá-las, complementá-las e confirmá-las.
+
+Depois da conferência, os dados são gravados e enviados ao SICAR. A transmissão gera o Recibo de Inscrição, documento que comprova a entrega das informações. O demonstrativo do cadastro registra a situação do CAR, que pode estar ativo, pendente ou cancelado, e a condição da análise, como aguardando análise, em análise ou analisado com pendências. Esses estados administrativos não podem ser deduzidos apenas a partir das camadas vetoriais públicas.
+
+Na análise, o órgão estadual confronta a declaração com bases de referência e verifica a consistência das informações. Havendo divergências ou documentos insuficientes, pode emitir notificação para esclarecimento ou correção. A retificação atualiza dados documentais ou geometrias e passa a constituir a versão mais recente do cadastro. Em situações que exijam regularização, o procedimento pode prosseguir para adesão ao Programa de Regularização Ambiental e assinatura dos instrumentos cabíveis.
+
+Esse fluxo explica por que duas extrações do SICAR realizadas em datas diferentes podem apresentar quantidades e geometrias distintas. A rastreabilidade depende de conservar a data do download e os arquivos efetivamente analisados. Também explica por que a divergência com o MapBiomas deve ser tratada como indicação para exame, e não como confirmação automática de erro na declaração.
+
+\subsection{Operacionalização do CAR na Paraíba}
+
+Na Paraíba, a Superintendência de Administração do Meio Ambiente (SUDEMA) atua como órgão ambiental estadual responsável pelos procedimentos relacionados ao CAR. A página institucional reúne formulários para requerimento de análise, alteração de titularidade e endereço eletrônico, cancelamento do cadastro, regularização de Reserva Legal e atendimento por responsável técnico. Também disponibiliza os dispositivos normativos estaduais e fluxos de regularização ambiental \cite{sudema2026}.
+
+A SUDEMA esclarece que a inscrição constitui o primeiro passo da regularização ambiental e atribui ao proprietário ou possuidor a responsabilidade pelas informações declaradas e por suas retificações. Quando a análise identifica pendências ou inconsistências, o responsável deve fornecer informações complementares ou promover as correções solicitadas \cite{sudema2026}. O processo administrativo estadual, portanto, envolve comunicação com o declarante e avaliação de outras informações além da geometria publicada.
+
+A Paraíba utiliza o módulo padrão do SICAR com receptor federal, enquanto a atuação estadual compreende atendimento, análise dos cadastros e condução dos procedimentos de regularização. A base pública utilizada neste trabalho representa uma extração do sistema e deve ser entendida como retrato da situação disponível na data de aquisição. Ela não contém, necessariamente, todos os documentos e registros administrativos usados pela SUDEMA durante a análise individual.
+
+Essa divisão de competências fundamenta o limite interpretativo do estudo. O Serviço Florestal Brasileiro apoia a gestão e a integração nacional do SICAR, ao passo que a avaliação administrativa ocorre no âmbito estadual. Assim, os resultados espaciais podem subsidiar a triagem e a priorização de verificações, mas não substituem a análise conduzida pela SUDEMA nem os procedimentos de regularização ambiental aplicáveis a cada imóvel.
+
+
+\subsection{Sensoriamento remoto e mapeamento da cobertura e uso da terra}
+
+O sensoriamento remoto constitui uma importante ferramenta para a caracterização da superfície terrestre, permitindo identificar diferentes formas de cobertura e uso da terra a partir de imagens obtidas por sensores orbitais. Associado aos Sistemas de Informação Geográfica (SIG), possibilita o acompanhamento de alterações na paisagem e a análise da distribuição espacial da vegetação, das atividades agropecuárias e das áreas urbanizadas.
+
+Em estudos de bacias hidrográficas, essas informações contribuem para compreender a relação entre a ocupação territorial e os processos ambientais. A utilização de imagens de diferentes períodos também permite identificar alterações na cobertura da terra, embora a comparação dependa das características dos sensores, da resolução espacial e dos procedimentos de classificação empregados.
+
+Na bacia hidrográfica do rio Cuiá, em João Pessoa, \citeonline{soares2024} utilizou imagens Landsat e PlanetScope para caracterizar a cobertura e o uso da terra em diferentes períodos. A classificação supervisionada foi realizada no ArcGIS Pro, pelo método da máxima verossimilhança, permitindo a identificação de oito classes temáticas. As áreas foram quantificadas a partir dos dados matriciais, contribuindo para a análise dos efeitos da urbanização sobre o escoamento superficial. Esse trabalho representa uma aplicação do sensoriamento remoto na caracterização ambiental de bacias hidrográficas, embora apresente objetivos distintos dos adotados na presente pesquisa.
+
+No Brasil, o projeto MapBiomas disponibiliza séries anuais de cobertura e uso da terra, produzidas a partir de imagens orbitais e procedimentos de classificação. \citeonline{souza2020} descrevem a utilização do acervo Landsat e do processamento em nuvem para reconstruir mudanças na cobertura da terra dos biomas brasileiros ao longo de aproximadamente três décadas.
+
+Apesar das possibilidades oferecidas pelo sensoriamento remoto, a resolução espacial influencia a representação das feições mapeadas. Em produtos com resolução de 30 m, fragmentos estreitos e pequenas áreas de vegetação podem não ser individualizados, especialmente quando diferentes coberturas ocorrem em uma mesma célula. Dessa forma, a interpretação dos mapas deve considerar as características do produto utilizado e a escala da análise.
+
+A utilização de diferentes fontes de informação geográfica também exige atenção à compatibilidade entre suas representações. No caso do CAR e do MapBiomas, a comparação envolve polígonos delimitados pelos declarantes e classes de cobertura da terra provenientes de classificação de imagens orbitais, que podem apresentar diferenças espaciais e temáticas.
+
+
+
+\subsection{Comparação entre dados declaratórios e mapeamento por sensoriamento remoto}
+
+O Cadastro Ambiental Rural e o MapBiomas representam informações ambientais produzidas por procedimentos distintos. Enquanto o CAR reúne feições geoespaciais autodeclaradas, o MapBiomas apresenta classes de cobertura e uso da terra obtidas por classificação de imagens orbitais. A comparação entre essas bases permite identificar áreas de correspondência e divergência espacial, mas não estabelece, isoladamente, qual representação corresponde às condições reais do território.
+
+A compatibilidade entre mapas depende da definição das classes utilizadas e dos procedimentos de classificação. \citeonline{neves2020}, ao compararem os produtos TerraClass e MapBiomas na Amazônia brasileira, demonstraram que diferenças entre legendas influenciam os resultados de concordância temática e espacial.
+
+\citeonline{pontius2011} discutem a importância de distinguir divergências relacionadas à quantidade de área atribuída às classes daquelas associadas à sua distribuição espacial. Essa abordagem demonstra que mapas podem apresentar proporções semelhantes de determinadas coberturas, mas diferir quanto à localização das feições representadas.
+
+Outro aspecto importante é a distinção entre concordância espacial e acurácia temática. \citeonline{foody2002} discute as limitações dos procedimentos de avaliação de classificações de cobertura da terra, enquanto \citeonline{olofsson2014} apresentam recomendações para estimativas de área e avaliação de acurácia com dados independentes de referência.
+
+\citeonline{olofsson2013} também destacam que os erros de classificação podem influenciar as estimativas de área obtidas diretamente de mapas temáticos. Dessa forma, a quantificação da correspondência entre duas bases não equivale necessariamente à validação de suas classificações.
+
+No presente estudo, a comparação entre os remanescentes de vegetação nativa declarados no CAR e as classes naturais do MapBiomas foi realizada por meio de sobreposição espacial. O índice de convergência representa a proporção da área declarada rasterizada que coincide com as classes consideradas naturais, sem constituir uma avaliação independente da acurácia do MapBiomas ou da regularidade ambiental dos imóveis rurais.
+
+
+\newpage

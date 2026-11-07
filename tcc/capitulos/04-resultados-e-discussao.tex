@@ -1,0 +1,244 @@
+% !TeX root = ../main.tex
+
+\section{Resultados e discussão}
+
+\subsection{Qualidade e abrangência das bases}
+
+A camada original de imóveis rurais continha 3.820 registros. Antes do controle geométrico, foram excluídos 230 cadastros com situação cancelada, restando 3.590 feições ativas ou pendentes como entrada da auditoria. Foram identificadas quatro geometrias inválidas. Após a aplicação de \textit{make valid}, duas permaneceram como \textit{MultiPolygon} e foram mantidas; as outras duas tornaram-se \textit{GeometryCollection}, compostas por partes poligonais e lineares, e foram excluídas da camada estritamente poligonal. Essa exclusão, e não as duplicidades, explica a redução de 3.590 para 3.588 feições. As duas feições excluídas não interceptavam a bacia hidrográfica do rio Gramame.
+
+O indicador de duplicidade assinalou 98 feições distribuídas em 48 grupos de geometrias exatamente iguais: 46 grupos com duas feições e dois grupos com três feições. Como cada registro possuía código cadastral distinto, todos foram preservados. Entre os 1.974 registros que interceptaram a bacia, 64 pertenciam a 31 grupos de geometria idêntica. Assim, o valor de 1.974 representa registros cadastrais interceptados, e não polígonos espacialmente exclusivos; as áreas foram calculadas a partir da união geométrica para impedir dupla contagem. Na camada de vegetação nativa declarada, foram analisados 279 polígonos, sem geometrias ausentes, vazias ou inválidas; duas feições formavam um grupo de geometria idêntica e também foram mantidas. Os resultados do controle de qualidade estão apresentados na Tabela~\ref{tab:qc}.
+
+
+\begin{table}[H]
+\centering
+\caption{Síntese do controle de qualidade geométrica}
+\label{tab:qc}
+
+\begingroup
+\small
+\SingleSpacing
+
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{3pt}
+
+\begin{tabularx}{\textwidth}{
+>{\RaggedRight\arraybackslash}X
+*{5}{>{\centering\arraybackslash}p{1.65cm}}
+}
+\toprule
+
+\textbf{Camada} &
+\textbf{Entrada} &
+\textbf{Inválidas} &
+\textbf{Reparadas} &
+\shortstack{\textbf{Feições em}\\\textbf{geometrias}\\\textbf{idênticas}} &
+\textbf{Saída} \\
+
+\midrule
+
+Área de estudo &
+1 & 0 & 0 & 0 & 1 \\
+
+Imóveis rurais &
+3.590 & 4 & 4 & 98 & 3.588 \\
+
+Vegetação declarada &
+279 & 0 & 0 & 2 & 279 \\
+
+\bottomrule
+\end{tabularx}
+
+\vspace{0.20cm}
+
+\fontefigura{Elaboração própria (2026). Nota: a coluna de geometrias idênticas contabiliza todos os registros pertencentes aos grupos e não representa feições removidas.}
+
+\endgroup
+\end{table}
+
+
+A identificação de geometrias inválidas e de registros com geometria idêntica evidencia a importância do controle de qualidade antes das operações espaciais. A preservação dos registros mantém a correspondência com os códigos do SICAR, enquanto a união geométrica impede que superfícies coincidentes sejam contabilizadas mais de uma vez. A distinção entre contagem cadastral e área espacialmente exclusiva foi mantida em toda a apresentação dos resultados.
+
+\subsection{Vegetação nativa declarada}
+
+A área conjunta dos imóveis rurais que interceptaram a bacia hidrográfica do rio Gramame totalizou 43.107,26 ha. O somatório das áreas dos polígonos de vegetação nativa declarada foi de 8.278,86 ha, enquanto a união geométrica resultou em 8.224,30 ha. A diferença de 54,56 ha, equivalente a 0,66\% do somatório, corresponde à área contabilizada mais de uma vez devido às sobreposições entre polígonos. Considerando a área espacialmente distinta, a vegetação declarada representou aproximadamente 19,08\% da área conjunta dos imóveis analisados.
+
+Os polígonos de vegetação declarada apresentaram área média de 29,67 ha e mediana de 2,59 ha. Essa diferença indica uma distribuição assimétrica, caracterizada pela presença de numerosos fragmentos de menor extensão e de polígonos maiores que elevam a média. A distribuição espacial da vegetação declarada na bacia está apresentada na Figura~\ref{fig:vegetacao}.
+
+\begin{figure}[H]
+\centering
+\caption{Distribuição da vegetação nativa declarada no CAR na bacia do rio Gramame}
+\mapaoumarcador{mapa_02_vegetacao_declarada.png}{\textwidth}
+\fontefigura{Elaboração própria (2026) com dados do SICAR e AESA.}
+\label{fig:vegetacao}
+\end{figure}
+
+\subsection{Convergência com o MapBiomas 2025}
+
+A conversão dos polígonos de vegetação declarada para a grade do MapBiomas resultou em 8.224,74 ha de pixels válidos, com diferença de 0,44 ha em relação à área obtida pela união vetorial. Desse total, 5.235,93 ha coincidiram com classes naturais, enquanto 2.988,81 ha corresponderam a classes não naturais.
+Com base na Equação~\ref{eq:ic}, o índice de convergência espacial foi de:
+
+\begin{equation}
+IC = \frac{5\,235{,}93}{8\,224{,}74} \times 100 = 63{,}66\%.
+\end{equation}
+
+O resultado indica que a maior parte da vegetação nativa declarada apresentou correspondência com as classes naturais do MapBiomas. Entretanto, os 36,34\% restantes, equivalentes a 2.988,81 ha, demonstram a existência de divergências espaciais relevantes entre as bases. Os principais indicadores da comparação estão apresentados na Tabela~\ref{tab:indicadores}.
+
+
+\begin{table}[H]
+\centering
+\caption{Indicadores gerais da comparação espacial}
+\label{tab:indicadores}
+
+\begingroup
+\small
+\SingleSpacing
+
+% Espaçamento vertical entre as linhas
+\renewcommand{\arraystretch}{1.45}
+
+% Espaçamento horizontal entre as colunas
+\setlength{\tabcolsep}{8pt}
+
+\begin{tabularx}{\textwidth}{
+>{\RaggedRight\arraybackslash}X
+>{\raggedleft\arraybackslash}p{3.0cm}
+}
+\toprule
+
+\textbf{Indicador} & \textbf{Resultado} \\
+\midrule
+
+Imóveis rurais interceptados & 1.974 \\
+
+Vegetação declarada espacialmente distinta & 8.224,30 ha \\
+
+Sobreposição entre polígonos declarados & 54,56 ha \\
+
+Área declarada rasterizada válida & 8.224,74 ha \\
+
+Área declarada coincidente com classes naturais & 5.235,93 ha \\
+
+Área declarada em classes não naturais & 2.988,81 ha \\
+
+Índice de convergência espacial & 63,66\% \\
+
+Área natural nos imóveis fora da declaração & 3.012,30 ha \\
+
+\bottomrule
+\end{tabularx}
+
+\vspace{0.20cm}
+
+\fontefigura{Elaboração própria (2026), com dados do SICAR e MapBiomas Coleção 11.}
+
+\endgroup
+\end{table}
+
+Entre as classes naturais identificadas nos polígonos declarados, predominou a formação florestal, com 4.235,94 ha, seguida por campo alagado e área pantanosa (540,54 ha) e mangue (334,26 ha). Também foram identificadas áreas de formação savânica e apicum, em menores proporções.
+
+Nas áreas sem correspondência com classes naturais, destacaram-se pastagem (1.206,81 ha) e mosaico de usos (1.197,27 ha). Juntas, essas duas classes representaram aproximadamente 80,44\% da área divergente. A distribuição das principais classes de cobertura e uso da terra está apresentada na Tabela~\ref{tab:classes}.
+
+
+\begin{table}[H]
+\centering
+\caption{Principais classes do MapBiomas na vegetação declarada}
+\label{tab:classes}
+
+\begingroup
+\small
+\SingleSpacing
+
+% Espaçamento vertical
+\renewcommand{\arraystretch}{1.45}
+
+% Espaçamento horizontal
+\setlength{\tabcolsep}{7pt}
+
+\begin{tabularx}{\textwidth}{
+>{\RaggedRight\arraybackslash}X
+>{\RaggedRight\arraybackslash}p{3.3cm}
+>{\raggedleft\arraybackslash}p{2.2cm}
+}
+\toprule
+
+\textbf{Classe} &
+\textbf{Agrupamento analítico} &
+\textbf{Área (ha)} \\
+
+\midrule
+
+Formação florestal & Natural & 4.235,94 \\
+
+Campo alagado e área pantanosa & Natural & 540,54 \\
+
+Mangue & Natural & 334,26 \\
+
+Formação savânica & Natural & 115,20 \\
+
+Apicum & Natural & 9,99 \\
+
+Pastagem & Não natural & 1.206,81 \\
+
+Mosaico de usos & Não natural & 1.197,27 \\
+
+Cana-de-açúcar & Não natural & 334,71 \\
+
+Outras lavouras temporárias & Não natural & 174,96 \\
+
+Demais classes não naturais & Não natural & 75,06 \\
+
+\bottomrule
+\end{tabularx}
+
+\vspace{0.20cm}
+
+\fontefigura{Elaboração própria (2026), com dados do MapBiomas Coleção 11 e do SICAR.}
+
+\endgroup
+\end{table}
+
+A predominância de pastagens e mosaicos de usos entre as áreas divergentes indica que as diferenças se concentram principalmente em classes associadas às atividades agropecuárias. Entretanto, essa correspondência temática não permite determinar, isoladamente, se houve alteração da cobertura vegetal, imprecisão na declaração ou diferenças decorrentes dos procedimentos de classificação.
+
+Além disso, foram identificados 3.012,30 ha de cobertura natural mapeada pelo MapBiomas dentro dos imóveis rurais, mas fora dos polígonos de vegetação nativa declarada analisados. Essas áreas não representam necessariamente omissões cadastrais, pois podem estar relacionadas a outras categorias ambientais do CAR ou a diferenças entre as bases utilizadas.
+
+A distribuição espacial das áreas coincidentes e divergentes pode ser observada na Figura~\ref{fig:convergencia}.
+
+\begin{figure}[H]
+\centering
+\caption{Convergência espacial entre a vegetação declarada no CAR e as classes naturais do MapBiomas em 2025}
+\mapaoumarcador{mapa_03_convergencia_car_mapbiomas.png}{\textwidth}
+\fontefigura{Elaboração própria (2026) com dados de SICAR e MapBiomas Coleção 11.}
+\label{fig:convergencia}
+\end{figure}
+
+\subsection{Interpretação e limitações}
+
+A divergência identificada em 36,34\% da área declarada deve ser interpretada considerando as diferenças entre as bases analisadas. O CAR reúne informações autodeclaradas, enquanto o MapBiomas apresenta classificações da cobertura e uso da terra obtidas por sensoriamento remoto. As diferenças podem estar associadas à data das declarações, à precisão dos limites, às mudanças na cobertura da terra e às incertezas de classificação, especialmente nas bordas e em fragmentos de menor extensão.
+
+A interpretação das divergências também deve considerar as características dos procedimentos de classificação e a resolução espacial das imagens utilizadas. Conforme discutido por \citeonline{foody2002}, os mapas temáticos estão sujeitos a incertezas que devem ser consideradas em suas aplicações. Dessa forma, a diferença entre a vegetação declarada e a cobertura mapeada não pode ser atribuída exclusivamente a inconsistências cadastrais.
+
+A predominância de pastagens e mosaicos de usos entre as classes divergentes também deve ser analisada com cautela. A heterogeneidade dessas paisagens, associada à resolução espacial de 30 m, pode dificultar a representação de pequenos fragmentos de vegetação. Além disso, as condições identificadas pelo MapBiomas em 2025 não correspondem necessariamente àquelas existentes no momento da declaração do CAR.
+
+A utilização de imagens de maior resolução e de séries temporais poderia contribuir para o esclarecimento dessas diferenças. No entanto, como destacam \citeonline{olofsson2014}, uma avaliação formal de acurácia requer dados independentes de referência e procedimentos amostrais adequados. Portanto, o índice calculado neste estudo deve ser interpretado como uma medida de convergência espacial, e não como uma estimativa de acurácia temática.
+
+Conforme discutido por \citeonline{neves2020}, diferenças entre legendas e procedimentos metodológicos podem influenciar a concordância entre produtos de cobertura da terra. Nesse sentido, o índice calculado representa a convergência espacial entre as bases, não constituindo uma medida de acurácia temática ou de regularidade ambiental dos imóveis.
+
+Apesar dessas limitações, a comparação permitiu identificar áreas que podem ser priorizadas em análises complementares, mediante consulta às demais informações do CAR, avaliação de imagens de maior resolução e análise da evolução temporal da cobertura da terra. Essa aplicação está relacionada ao potencial do cadastro como instrumento de apoio à gestão ambiental e territorial, discutido por \citeonline{roitman2018}.
+
+
+\subsection{Distribuição temática das divergências}
+
+As maiores divergências entre a vegetação declarada no CAR e as classes naturais do MapBiomas ocorreram em áreas classificadas como pastagem e mosaico de usos, que juntas representaram 2.404,08 ha. A predominância dessas classes indica que parte dos polígonos declarados apresenta cobertura associada a atividades agropecuárias no mapeamento de 2025. Entretanto, essa diferença não permite determinar se houve alteração da vegetação após a declaração, imprecisão na delimitação dos polígonos ou divergências decorrentes dos métodos de classificação.
+
+A classe mosaico de usos merece atenção por representar áreas com diferentes formas de ocupação, nas quais podem existir pequenos fragmentos de vegetação natural. Devido à resolução espacial de 30 m, algumas feições de menor extensão podem não ser individualizadas, especialmente nas margens de cursos d'água e nas bordas dos fragmentos. Essas características podem contribuir para as diferenças observadas entre as bases.
+
+As áreas classificadas como cana-de-açúcar e outras lavouras temporárias totalizaram 509,67 ha dentro dos polígonos declarados. A presença dessas classes reforça a importância de considerar o histórico da cobertura da terra, uma vez que as condições identificadas pelo MapBiomas em 2025 podem não corresponder àquelas existentes na data da declaração. A análise de imagens de diferentes períodos permitiria investigar essas alterações e compreender melhor as divergências identificadas.
+
+
+\subsection{Sensibilidade e possibilidades de aprofundamento}
+
+Os resultados também estão sujeitos às escolhas metodológicas adotadas no processamento, especialmente à resolução espacial de 30 m, ao critério de inclusão dos pixels e à definição das classes consideradas naturais. A utilização do centro do pixel como referência pode influenciar a representação de fragmentos estreitos e das bordas dos polígonos, alterando a área de correspondência entre as bases.
+
+Embora o índice de convergência permita quantificar a concordância espacial entre o CAR e o MapBiomas, sua interpretação deve considerar essas limitações. Estudos posteriores poderão avaliar a influência de diferentes critérios de rasterização, incorporar séries temporais de cobertura da terra e utilizar imagens de maior resolução para investigar as áreas divergentes.
+
+A realização de uma avaliação independente de acurácia, com amostragem adequada e dados de referência, também permitiria examinar as incertezas associadas à classificação da cobertura da terra. Essas análises complementariam os resultados apresentados, sem alterar o caráter exploratório e territorial da comparação realizada neste estudo.
