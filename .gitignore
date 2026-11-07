@@ -37,3 +37,23 @@ qgis/dados/
 Thumbs.db
 .vscode/
 .idea/
+
+# Artefatos de compilação LaTeX
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.xdv
+_minted*/
+tcc/*.pdf
+apresentacao/*.pdf

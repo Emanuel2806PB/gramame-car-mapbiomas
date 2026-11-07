@@ -1,0 +1,1014 @@
+% !TeX program = xelatex
+% Projeto preparado para Overleaf com XeLaTeX + BibTeX.
+
+% Bibliografia separada no arquivo referencias.bib.
+
+\documentclass[12pt,oneside,a4paper,brazilian,english,fleqn]{abntex2}
+
+\usepackage{fontspec}
+\IfFontExistsTF{Arial}{
+  \setmainfont{Arial}
+  \setsansfont{Arial}
+}{
+  \setmainfont{TeX Gyre Heros}
+  \setsansfont{TeX Gyre Heros}
+}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{geometry}
+\geometry{top=3cm,left=3cm,bottom=2cm,right=2cm}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{etoolbox}
+\usepackage[alf,abnt-emphasize=bf,abnt-etal-text=it]{abntex2cite}
+\hypersetup{hidelinks,bookmarksdepth=4}
+
+% NBR 10520:2023: chamadas autor-data em maiúsculas e minúsculas.
+\providecommand{\UpperOrSCCite}[1]{#1}
+\renewcommand{\UpperOrSCCite}[1]{#1}
+
+\graphicspath{{figuras/}}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{2em}
+\OnehalfSpacing
+\setlength{\mathindent}{0pt}
+\setlength{\afterchapskip}{1.5\baselineskip}
+\setlength{\beforechapskip}{0pt}
+
+\setsecheadstyle{\raggedright\normalfont\bfseries\MakeUppercase}
+\setsubsecheadstyle{\normalfont\bfseries}
+\setsubsubsecheadstyle{\normalfont\bfseries}
+\setlength{\beforesecskip}{1.5\baselineskip}
+\setlength{\aftersecskip}{1\baselineskip}
+
+% O TCC usa seções, sem capítulos. Impede a numeração 0.1 e produz 1, 2, 2.1 etc.
+\setcounter{secnumdepth}{3}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+
+% Títulos pré-textuais conforme o modelo institucional: Arial 12 e negrito.
+\renewcommand{\printtoctitle}[1]{\centering\normalfont\bfseries\fontsize{12}{14.4}\selectfont #1}
+\renewcommand{\printloftitle}[1]{\centering\normalfont\bfseries\fontsize{12}{14.4}\selectfont #1}
+\renewcommand{\printlottitle}[1]{\centering\normalfont\bfseries\fontsize{12}{14.4}\selectfont #1}
+\renewcommand{\listfigurename}{Lista de ilustrações}
+\renewcommand{\listtablename}{Lista de tabelas}
+\renewcommand{\contentsname}{Sumário}
+
+\captionsetup{
+  font={small,singlespacing},
+  justification=justified,
+  singlelinecheck=false,
+  labelsep=endash,
+  position=above
+}
+\newcommand{\fontefigura}[1]{\par\vspace{2pt}{\footnotesize\SingleSpacing Fonte: #1\par}}
+\newcommand{\pendente}[1]{\textcolor{red!70!black}{\textbf{[PREENCHER: #1]}}}
+\newcommand{\repositoriogithub}{\url{https://github.com/Emanuel2806PB/gramame-car-mapbiomas}}
+\newcommand{\tituloapendice}[2]{%
+  \clearpage
+  \phantomsection
+  \addcontentsline{toc}{section}{APÊNDICE #1 -- #2}
+  \begin{center}\bfseries APÊNDICE #1 -- #2\end{center}
+  \vspace{\baselineskip}
+}
+\renewcommand{\lstlistingname}{Código}
+\lstdefinestyle{codigotcc}{
+  basicstyle=\ttfamily\fontsize{8}{9.5}\selectfont,
+  keywordstyle=\bfseries,
+  commentstyle=\itshape\color{gray!75!black},
+  stringstyle=\color{blue!45!black},
+  numbers=left,
+  numberstyle=\tiny\color{gray!75!black},
+  stepnumber=1,
+  numbersep=8pt,
+  frame=single,
+  rulecolor=\color{gray!55},
+  breaklines=true,
+  breakatwhitespace=false,
+  showstringspaces=false,
+  columns=fullflexible,
+  keepspaces=true,
+  tabsize=4,
+  captionpos=t,
+  aboveskip=\baselineskip,
+  belowskip=\baselineskip,
+  literate=
+    {á}{{\'a}}1 {à}{{\`a}}1 {ã}{{\~a}}1 {â}{{\^a}}1
+    {é}{{\'e}}1 {ê}{{\^e}}1 {í}{{\'i}}1 {ó}{{\'o}}1
+    {ô}{{\^o}}1 {õ}{{\~o}}1 {ú}{{\'u}}1 {ç}{{\c c}}1
+    {Á}{{\'A}}1 {À}{{\`A}}1 {Ã}{{\~A}}1 {Â}{{\^A}}1
+    {É}{{\'E}}1 {Ê}{{\^E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1
+    {Ô}{{\^O}}1 {Õ}{{\~O}}1 {Ú}{{\'U}}1 {Ç}{{\c C}}1
+}
+\newcommand{\codigoarquivo}[4]{%
+  \IfFileExists{#4}{%
+    \lstinputlisting[style=codigotcc,language=#1,caption={#2},label={#3}]{#4}%
+  }{%
+    \fbox{\parbox{0.92\linewidth}{\centering Arquivo de código não encontrado: \\ \texttt{\detokenize{#4}}}}%
+  }%
+}
+\newcommand{\mapaoumarcador}[2]{%
+  \IfFileExists{figuras/#1}{\includegraphics[width=#2]{figuras/#1}}{%
+    \fbox{\parbox[c][7cm][c]{0.92\linewidth}{\centering Arquivo cartográfico não encontrado: \\ \texttt{\detokenize{#1}}}}}
+}
+
+% Paginação dos elementos textuais e pós-textuais no canto superior direito.
+\makepagestyle{abntdireita}
+\makeoddhead{abntdireita}{}{}{\thepage}
+\makeevenhead{abntdireita}{}{}{\thepage}
+\makeoddfoot{abntdireita}{}{}{}
+\makeevenfoot{abntdireita}{}{}{}
+\makeheadrule{abntdireita}{\textwidth}{0pt}
+\aliaspagestyle{plain}{abntdireita}
+
+\newbool{incluirdedicatoria}
+\newbool{incluiragradecimentos}
+\newbool{incluirepigrafe}
+\newbool{incluirlistas}
+\newbool{controleeditorial}
+\boolfalse{incluirdedicatoria}
+\boolfalse{incluiragradecimentos}
+\boolfalse{incluirepigrafe}
+\booltrue{incluirlistas}
+\boolfalse{controleeditorial}
+
+\titulo{CONVERGÊNCIA ESPACIAL ENTRE A VEGETAÇÃO NATIVA DECLARADA NO CAR E O MAPBIOMAS NA BACIA DO RIO GRAMAME}
+\autor{Emanuel Gomes Soares}
+\local{Senhor do Bonfim -- BA}
+\data{2026}
+\orientador{\pendente{nome e titulação do orientador}}
+\instituicao{Instituto Federal de Educação, Ciência e Tecnologia Baiano}
+\tipotrabalho{Trabalho de Conclusão de Curso}
+\preambulo{Trabalho de Conclusão de Curso apresentado ao Instituto Federal de Educação, Ciência e Tecnologia Baiano como requisito parcial para obtenção do título de Especialista em Geoprocessamento.}
+
+\begin{document}
+\selectlanguage{brazilian}
+
+\begin{capa}
+\begin{center}
+{\bfseries Ministério da Educação\par}
+{\bfseries Secretaria de Educação Profissional e Tecnológica\par}
+{\bfseries Instituto Federal de Educação, Ciência e Tecnologia Baiano\par}
+\vspace{2.5cm}
+{\bfseries Pró-Reitoria de Pesquisa, Inovação e Pós-Graduação\par}
+{\bfseries Curso de Pós-Graduação \textit{Lato Sensu} em Geoprocessamento\par}
+\vfill
+{\imprimirautor\par}
+\vspace{2.0cm}
+{\bfseries\imprimirtitulo\par}
+\vfill
+{\imprimirlocal\par}
+{\imprimirdata\par}
+\end{center}
+\end{capa}
+
+\begin{folhaderosto}
+\begin{center}
+{\imprimirautor\par}
+\vspace{2.0cm}
+{\bfseries\imprimirtitulo\par}
+\vspace{2.5cm}
+\hspace{0.47\textwidth}
+\begin{minipage}{0.52\textwidth}
+\SingleSpacing
+\imprimirpreambulo
+\par\vspace{1.2cm}
+Orientador(a): \imprimirorientador
+\end{minipage}
+\vfill
+{\imprimirlocal\par}
+{\imprimirdata\par}
+\end{center}
+\end{folhaderosto}
+
+\begin{folhadeaprovacao}
+\begin{center}
+{\imprimirautor\par}
+\vspace{1.6cm}
+{\bfseries\imprimirtitulo\par}
+\vspace{1.8cm}
+\hspace{0.47\textwidth}
+\begin{minipage}{0.52\textwidth}
+\SingleSpacing
+\imprimirpreambulo
+\end{minipage}
+
+\vspace{1.2cm}
+Aprovado em \pendente{data da defesa}.
+\vspace{1.0cm}
+
+{\bfseries BANCA EXAMINADORA\par}
+\vspace{1.5cm}
+\rule{0.58\textwidth}{0.4pt}\par
+\imprimirorientador\ (Orientador)\par
+\vspace{1.4cm}
+\rule{0.58\textwidth}{0.4pt}\par
+\pendente{titulação, nome e filiação do primeiro membro}\par
+\vspace{1.4cm}
+\rule{0.58\textwidth}{0.4pt}\par
+\pendente{titulação, nome e filiação do segundo membro}\par
+\end{center}
+\end{folhadeaprovacao}
+
+\ifbool{incluirdedicatoria}{
+\begin{dedicatoria}\vspace*{\fill}\hspace{0.45\textwidth}\begin{minipage}{0.5\textwidth}\itshape\pendente{dedicatória}\end{minipage}\end{dedicatoria}}{}
+
+\ifbool{incluiragradecimentos}{
+\begin{agradecimentos}\pendente{agradecimentos pessoais e institucionais}\end{agradecimentos}}{}
+
+\ifbool{incluirepigrafe}{
+\begin{epigrafe}\vspace*{\fill}\begin{flushright}\textit{\pendente{epígrafe e autoria}}\end{flushright}\end{epigrafe}}{}
+
+\cleardoublepage
+\begin{center}
+{\bfseries\fontsize{12}{14.4}\selectfont RESUMO}
+\end{center}
+\vspace{1.5\baselineskip}
+O Cadastro Ambiental Rural (CAR) reúne informações geoespaciais autodeclaradas que podem apoiar diagnósticos territoriais quando suas limitações são explicitadas. Este trabalho caracterizou a vegetação nativa declarada no CAR na bacia hidrográfica do rio Gramame, no estado da Paraíba, e avaliou sua convergência espacial com as classes naturais do MapBiomas Coleção 11 para o ano de 2025. O processamento integrou dados públicos do Sistema Nacional de Cadastro Ambiental Rural (SICAR), da Agência Executiva de Gestão das Águas do Estado da Paraíba (AESA), do Instituto Brasileiro de Geografia e Estatística (IBGE) e do MapBiomas, utilizando o Sistema de Referência Geocêntrico para as Américas 2000 (SIRGAS 2000) e a projeção Universal Transversa de Mercator (UTM), zona 25S. Foram aplicados procedimentos de recorte espacial, auditoria geométrica, união dos polígonos declarados e cruzamento entre dados matriciais e vetoriais, com resolução espacial de 30 m. O recorte reuniu 1.974 imóveis rurais e 279 polígonos de vegetação nativa declarada. A área declarada espacialmente distinta totalizou 8.224,30 ha, dos quais 5.235,93 ha coincidiram com classes naturais, resultando em um índice de convergência de 63,66\%. Outros 2.988,81 ha declarados corresponderam a classes não naturais, enquanto 3.012,30 ha de classes naturais ocorreram dentro dos imóveis rurais, mas fora das declarações analisadas. Os resultados indicam convergência espacial majoritária, embora não integral, permitindo direcionar verificações para áreas com divergências. Ressalta-se que a comparação realizada não constitui validação jurídica individual dos cadastros ambientais rurais.
+
+\vspace{1.0\baselineskip}
+\noindent\textbf{Palavras-chave:} Cadastro Ambiental Rural; MapBiomas; vegetação nativa; análise espacial; bacia hidrográfica.
+
+\cleardoublepage
+\begin{otherlanguage}{english}
+\begin{center}
+{\bfseries\fontsize{12}{14.4}\selectfont ABSTRACT}
+\end{center}
+\vspace{1.5\baselineskip}
+The Rural Environmental Registry (Cadastro Ambiental Rural – CAR) contains self-declared geospatial information that can support territorial assessments when its limitations are explicitly acknowledged. This study characterized the native vegetation declared in the CAR within the Gramame River basin, in the state of Paraíba, Brazil, and assessed its spatial agreement with the natural land cover classes of MapBiomas Collection 11 for 2025. The analysis integrated publicly available data from the National Rural Environmental Registry System (Sistema Nacional de Cadastro Ambiental Rural – SICAR), the Paraíba State Water Management Executive Agency (Agência Executiva de Gestão das Águas do Estado da Paraíba – AESA), the Brazilian Institute of Geography and Statistics (Instituto Brasileiro de Geografia e Estatística – IBGE), and MapBiomas, using the Geocentric Reference System for the Americas 2000 (SIRGAS 2000) and the Universal Transverse Mercator (UTM) projection, zone 25S. The methodological procedures included spatial clipping, geometric validation, union of declared polygons, and raster–vector spatial overlay at a spatial resolution of 30 m. The study area comprised 1,974 rural properties and 279 polygons of declared native vegetation. The spatially distinct declared area totaled 8,224.30 ha, of which 5,235.93 ha overlapped with natural land cover classes, resulting in a spatial agreement index of 63.66\%. An additional 2,988.81 ha of declared vegetation corresponded to non-natural land cover classes, while 3,012.30 ha of natural land cover occurred within rural properties but outside the analyzed declarations. The results indicate substantial, although incomplete, spatial agreement and provide a basis for prioritizing verification in areas showing discrepancies. This comparison does not constitute an individual legal validation of Rural Environmental Registry records.
+
+\vspace{1.0\baselineskip}
+\noindent\textbf{Keywords:} Rural Environmental Registry; MapBiomas; native vegetation; spatial analysis; watershed.
+\end{otherlanguage}
+\cleardoublepage
+
+\ifbool{incluirlistas}{
+\pdfbookmark[0]{\listfigurename}{lof}\listoffigures*\cleardoublepage
+\pdfbookmark[0]{\listtablename}{lot}\listoftables*\cleardoublepage
+\begin{center}
+{\bfseries\fontsize{12}{14.4}\selectfont Lista de abreviaturas e siglas}
+\end{center}
+\vspace{1.5\baselineskip}
+\noindent\begin{tabularx}{\textwidth}{>{\bfseries\RaggedRight\arraybackslash}p{2.2cm}>{\RaggedRight\arraybackslash}X}
+AESA & Agência Executiva de Gestão das Águas do Estado da Paraíba \\
+APP & Área de Preservação Permanente \\
+CAR & Cadastro Ambiental Rural \\
+CRS & Sistema de Referência de Coordenadas \\
+IBGE & Instituto Brasileiro de Geografia e Estatística \\
+IC & Índice de Convergência \\
+RL & Reserva Legal \\
+SICAR & Sistema Nacional de Cadastro Ambiental Rural \\
+SIG & Sistema de Informação Geográfica \\
+SIRGAS2000 & Sistema de Referência Geocêntrico para as Américas 2000\\
+SUDEMA & Superintendência de Administração do Meio Ambiente do Estado da Paraíba\\
+UTM & Universal Transversa de Mercator \\
+\end{tabularx}
+\cleardoublepage}{}
+
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+
+\textual
+\pagestyle{abntdireita}
+\label{pag:inicio-texto}
+
+\section{Introdução}
+
+O Cadastro Ambiental Rural (CAR) foi instituído pela Lei n. 12.651/2012 como instrumento nacional de integração das informações ambientais dos imóveis rurais. O artigo 29 o define como ``registro público eletrônico de âmbito nacional, obrigatório para todos os imóveis rurais'' \cite[art. 29]{brasil2012}. A mesma lei associa a base ao controle, ao monitoramento, ao planejamento ambiental e econômico e ao combate ao desmatamento. Embora essas finalidades fundamentem a utilização dos dados em análises ambientais e territoriais, é necessário considerar que as informações cadastradas são autodeclaradas e podem apresentar inconsistências em relação às condições observadas em campo.
+
+O recibo confirma a inscrição e o envio das informações, não a conformidade ambiental individual. Em orientação oficial, o Serviço Florestal Brasileiro esclarece que ``as informações declaradas serão objeto de análise e validação pelo órgão estadual competente'' \cite{car2026}. Nesse contexto, a comparação espacial realizada neste estudo permite identificar possíveis divergências entre a vegetação nativa declarada e a cobertura da terra mapeada, contribuindo para a identificação de áreas que demandam verificação, sem substituir a análise técnica e administrativa dos cadastros pelos órgãos competentes.
+
+A abrangência do CAR favorece análises territoriais em larga escala. Entretanto, a presença de geometrias sobrepostas, duplicadas ou inválidas exige controle de qualidade antes do cálculo de áreas. \citeonline{matias2024} mostraram que as sobreposições entre imóveis declarados interferem em operações de Sistemas de Informação Geográfica e demandam tratamento topológico explícito. Estudos com geotecnologias também demonstram o potencial do cadastro para análises territoriais, desde que as limitações de origem e qualidade sejam reconhecidas \cite{santos2021}.
+
+Produtos de sensoriamento remoto constituem referência temática independente para examinar a coerência espacial das declarações. O MapBiomas reconstrói séries anuais de cobertura e uso da terra a partir de imagens Landsat e processamento em nuvem \cite{souza2020}. A Coleção 11 disponibiliza mapas anuais com resolução espacial nominal de 30 m \cite{mapbiomas2026}. A comparação entre a vegetação declarada e as classes naturais permite identificar concordâncias e divergências, mas não elimina diferenças de data, resolução, legenda, método e finalidade.
+
+A compatibilidade entre mapas depende da harmonização das classes e dos procedimentos de classificação. \citeonline{neves2020} demonstraram que diferenças de legenda afetam o grau de concordância entre produtos de cobertura da terra. Assim, a comparação espacial permite identificar concordâncias e divergências entre as bases analisadas, considerando que os dados foram produzidos por metodologias distintas e estão sujeitos a limitações próprias.
+
+A bacia hidrográfica do rio Gramame foi adotada como unidade de estudo por sua importância para o litoral sul da Paraíba e para o abastecimento da Região Metropolitana de João Pessoa. O Plano de Recursos Hídricos das Bacias Hidrográficas do Litoral Sul reconhece a relevância estratégica do sistema Gramame e emprega geoprocessamento na definição de prioridades de gestão \cite{aesa2025}. O recorte hidrográfico permite examinar a paisagem como unidade ambiental, sem restringir a análise aos limites municipais.
+
+\subsection{Objetivo geral}
+
+Caracterizar a distribuição espacial da vegetação nativa declarada no Cadastro Ambiental Rural (CAR) na bacia hidrográfica do rio Gramame, na Paraíba, e avaliar sua convergência espacial com as classes naturais do MapBiomas para o ano de 2025.
+
+\subsection{Objetivos específicos}
+
+Como objetivos específicos, buscou-se:
+
+\begin{itemize}
+    \item verificar a qualidade geométrica das bases de dados utilizadas;
+    \item quantificar a área de vegetação nativa declarada, considerando as sobreposições entre polígonos;
+    \item calcular a proporção da vegetação declarada coincidente com as classes naturais do MapBiomas;
+    \item identificar as classes de cobertura e uso da terra associadas às divergências espaciais; e
+    \item sistematizar um procedimento reproduzível para apoiar análises e verificações técnicas.
+\end{itemize}
+
+\newpage
+
+\section{Referencial teórico}
+
+\subsection{Cadastro Ambiental Rural e Sistema de Cadastro Ambiental Rural}
+
+A Lei n. 12.651/2012 instituiu o CAR no âmbito do Sistema Nacional de Informação sobre Meio Ambiente. O cadastro reúne informações do perímetro do imóvel rural, das Áreas de Preservação Permanente, das áreas de uso restrito, das áreas consolidadas, das Reservas Legais e dos remanescentes de vegetação nativa \cite{brasil2012}. A organização dessas informações em uma base nacional amplia as possibilidades de controle e planejamento ambiental, mas a natureza declaratória da inscrição exige análise posterior pelo poder público.
+
+O Decreto n. 7.830/2012 regulamentou o SICAR como sistema eletrônico nacional destinado ao gerenciamento das informações ambientais dos imóveis rurais. Entre seus objetivos estão receber e integrar os dados do CAR, controlar e acompanhar a manutenção e a regularização da vegetação nativa e disponibilizar informações públicas de natureza ambiental \cite{brasil2012decreto}. CAR e SICAR, portanto, não são sinônimos: o primeiro é o registro ambiental do imóvel, enquanto o segundo corresponde à infraestrutura de informação que recebe, organiza e permite analisar as declarações.
+
+A emissão do recibo comprova que a inscrição foi transmitida ao sistema, mas não representa aprovação da localização da Reserva Legal nem reconhecimento de propriedade ou posse. A análise e a validação cabem ao órgão ambiental estadual competente \cite{car2026}. Essa distinção é essencial para o presente estudo, pois o cruzamento cartográfico identifica coerência ou divergência entre bases, sem produzir decisão sobre regularidade ambiental.
+
+As informações geoespaciais declaradas são produzidas em condições heterogêneas. A delimitação pode resultar de levantamento de campo, interpretação de imagens ou vetorização sobre bases com diferentes escalas e datas. Além disso, retificações posteriores alteram a geometria disponível no sistema. Por isso, avaliações territoriais precisam registrar a data de aquisição, verificar o sistema de referência e identificar sobreposições ou duplicidades antes de calcular áreas.
+
+\subsection{Estrutura das camadas geoespaciais do CAR}
+
+A inscrição organiza dados documentais e geoespaciais em conjuntos temáticos. A camada de área do imóvel representa o perímetro da propriedade ou posse rural e funciona como limite de referência para as demais feições. A geometria declarada no CAR tem finalidade ambiental e não substitui o georreferenciamento exigido para certificação fundiária, tampouco constitui título de domínio.
+
+Os remanescentes de vegetação nativa correspondem aos fragmentos declarados com cobertura vegetal natural. Essa camada pode se sobrepor a APP e Reserva Legal, pois os temas descrevem atributos diferentes de uma mesma área: cobertura existente, proteção decorrente da localização e destinação jurídica. A Instrução Normativa MMA n. 2/2014 determina que remanescentes existentes após 22 de julho de 2008 não perdem essa classificação em razão de intervenção não autorizada \cite{mma2014}.
+
+A utilização das informações do CAR em análises territoriais exige atenção à qualidade das geometrias declaradas. As delimitações podem apresentar sobreposições, duplicidades e inconsistências topológicas que interferem diretamente nos cálculos de área e nas operações de geoprocessamento. \citeonline{matias2024} discutem essas limitações e apresentam procedimentos voltados ao tratamento de sobreposições em imóveis rurais cadastrados.
+
+As dificuldades de integração de bases territoriais também são discutidas por \citeonline{sparovek2019}, que analisaram informações fundiárias brasileiras e identificaram sobreposições entre diferentes categorias de registro territorial. Embora a pesquisa apresente uma abordagem fundiária mais ampla, seus resultados evidenciam a importância da consistência espacial na utilização de bases cadastrais.
+
+Nesse sentido, a análise de remanescentes de vegetação nativa declarados deve considerar a possibilidade de coincidência geométrica entre diferentes feições. O cálculo da área resultante da união dos polígonos permite evitar a dupla contagem das superfícies sobrepostas, tornando a quantificação mais adequada à representação espacial do conjunto analisado.
+
+As principais camadas ambientais declaradas no CAR, bem como suas respectivas características e finalidades, estão apresentadas na Tabela~\ref{tab:camadascar}.
+
+\begin{table}[H]
+\centering
+\caption{Principais camadas geoespaciais declaradas no CAR}
+\label{tab:camadascar}
+
+\begingroup
+\small
+\SingleSpacing
+
+% Espaçamento vertical entre as linhas
+\renewcommand{\arraystretch}{1.35}
+
+% Espaçamento horizontal entre as colunas
+\setlength{\tabcolsep}{8pt}
+
+\begin{tabularx}{\textwidth}{
+>{\RaggedRight\arraybackslash}p{4.1cm}
+>{\arraybackslash}X
+}
+\toprule
+\textbf{Camada} & \textbf{Conteúdo representado} \\
+\midrule
+
+Área do imóvel rural &
+Perímetro da propriedade ou posse usado como referência espacial do cadastro \\
+
+Remanescente de vegetação nativa &
+Fragmentos declarados de vegetação nativa existentes no imóvel. \\
+
+Área de Preservação Permanente &
+Áreas protegidas em razão de sua localização, como margens de cursos d'água, entorno de nascentes e outras hipóteses legais. \\
+
+Reserva Legal &
+Área localizada no interior do imóvel destinada à conservação e ao uso sustentável, declarada como existente, proposta ou vinculada a situação administrativa específica. \\
+
+Área de uso restrito &
+Espaços submetidos a regras próprias de uso e conservação previstas na legislação. \\
+
+Área rural consolidada &
+Área com ocupação antrópica preexistente a 22 de julho de 2008, nos termos da Lei n. 12.651/2012. \\
+
+Servidão administrativa e utilidade pública &
+Faixas ou áreas afetadas por infraestrutura e outras finalidades públicas que interferem na área disponível do imóvel. \\
+
+Hidrografia e nascentes &
+Feições lineares, poligonais ou pontuais usadas na caracterização ambiental e na delimitação de áreas protegidas. \\
+
+\bottomrule
+\end{tabularx}
+
+\vspace{0.25cm}
+\fontefigura{Elaboração própria (2026) com informações de Brasil (2012, 2014) e SICAR.}
+
+\endgroup
+\end{table}
+
+As camadas ambientais do CAR não representam necessariamente categorias espaciais independentes, uma vez que uma mesma área pode estar associada a diferentes classificações. Por exemplo, um fragmento de vegetação nativa pode estar localizado em Área de Preservação Permanente (APP) e, simultaneamente, integrar a Reserva Legal (RL) do imóvel. Dessa forma, a quantificação das áreas requer atenção às possíveis sobreposições, a fim de evitar a dupla contagem. Neste estudo, a camada de imóveis rurais foi utilizada para delimitar o universo cadastral da bacia hidrográfica do rio Gramame, enquanto os polígonos de remanescentes de vegetação nativa constituíram a base da comparação espacial com o MapBiomas. As demais categorias ambientais, como APP, Reserva Legal e áreas de uso restrito, não foram consideradas individualmente na análise, por não integrarem o objetivo específico da comparação realizada.
+
+\subsection{Etapas de inscrição, análise e retificação}
+
+O cadastramento inicia-se com a identificação do cadastrante e do proprietário ou possuidor, seguida da inclusão dos documentos de comprovação da propriedade ou posse. Na etapa geoespacial são informados o perímetro do imóvel e, quando existentes, os remanescentes de vegetação nativa, as APP, as áreas de uso restrito, as áreas consolidadas e a Reserva Legal \cite{mma2014,car2026}. O módulo pré-preenchido pode apresentar informações recuperadas de bases oficiais, mas o declarante deve revisá-las, complementá-las e confirmá-las.
+
+Depois da conferência, os dados são gravados e enviados ao SICAR. A transmissão gera o Recibo de Inscrição, documento que comprova a entrega das informações. O demonstrativo do cadastro registra a situação do CAR, que pode estar ativo, pendente ou cancelado, e a condição da análise, como aguardando análise, em análise ou analisado com pendências. Esses estados administrativos não podem ser deduzidos apenas a partir das camadas vetoriais públicas.
+
+Na análise, o órgão estadual confronta a declaração com bases de referência e verifica a consistência das informações. Havendo divergências ou documentos insuficientes, pode emitir notificação para esclarecimento ou correção. A retificação atualiza dados documentais ou geometrias e passa a constituir a versão mais recente do cadastro. Em situações que exijam regularização, o procedimento pode prosseguir para adesão ao Programa de Regularização Ambiental e assinatura dos instrumentos cabíveis.
+
+Esse fluxo explica por que duas extrações do SICAR realizadas em datas diferentes podem apresentar quantidades e geometrias distintas. A rastreabilidade depende de conservar a data do download e os arquivos efetivamente analisados. Também explica por que a divergência com o MapBiomas deve ser tratada como indicação para exame, e não como confirmação automática de erro na declaração.
+
+\subsection{Operacionalização do CAR na Paraíba}
+
+Na Paraíba, a Superintendência de Administração do Meio Ambiente (SUDEMA) atua como órgão ambiental estadual responsável pelos procedimentos relacionados ao CAR. A página institucional reúne formulários para requerimento de análise, alteração de titularidade e endereço eletrônico, cancelamento do cadastro, regularização de Reserva Legal e atendimento por responsável técnico. Também disponibiliza os dispositivos normativos estaduais e fluxos de regularização ambiental \cite{sudema2026}.
+
+A SUDEMA esclarece que a inscrição constitui o primeiro passo da regularização ambiental e atribui ao proprietário ou possuidor a responsabilidade pelas informações declaradas e por suas retificações. Quando a análise identifica pendências ou inconsistências, o responsável deve fornecer informações complementares ou promover as correções solicitadas \cite{sudema2026}. O processo administrativo estadual, portanto, envolve comunicação com o declarante e avaliação de outras informações além da geometria publicada.
+
+A Paraíba utiliza o módulo padrão do SICAR com receptor federal, enquanto a atuação estadual compreende atendimento, análise dos cadastros e condução dos procedimentos de regularização. A base pública utilizada neste trabalho representa uma extração do sistema e deve ser entendida como retrato da situação disponível na data de aquisição. Ela não contém, necessariamente, todos os documentos e registros administrativos usados pela SUDEMA durante a análise individual.
+
+Essa divisão de competências fundamenta o limite interpretativo do estudo. O Serviço Florestal Brasileiro apoia a gestão e a integração nacional do SICAR, ao passo que a avaliação administrativa ocorre no âmbito estadual. Assim, os resultados espaciais podem subsidiar a triagem e a priorização de verificações, mas não substituem a análise conduzida pela SUDEMA nem os procedimentos de regularização ambiental aplicáveis a cada imóvel.
+
+
+\subsection{Sensoriamento remoto e mapeamento da cobertura e uso da terra}
+
+O sensoriamento remoto constitui uma importante ferramenta para a caracterização da superfície terrestre, permitindo identificar diferentes formas de cobertura e uso da terra a partir de imagens obtidas por sensores orbitais. Associado aos Sistemas de Informação Geográfica (SIG), possibilita o acompanhamento de alterações na paisagem e a análise da distribuição espacial da vegetação, das atividades agropecuárias e das áreas urbanizadas.
+
+Em estudos de bacias hidrográficas, essas informações contribuem para compreender a relação entre a ocupação territorial e os processos ambientais. A utilização de imagens de diferentes períodos também permite identificar alterações na cobertura da terra, embora a comparação dependa das características dos sensores, da resolução espacial e dos procedimentos de classificação empregados.
+
+Na bacia hidrográfica do rio Cuiá, em João Pessoa, \citeonline{soares2024} utilizou imagens Landsat e PlanetScope para caracterizar a cobertura e o uso da terra em diferentes períodos. A classificação supervisionada foi realizada no ArcGIS Pro, pelo método da máxima verossimilhança, permitindo a identificação de oito classes temáticas. As áreas foram quantificadas a partir dos dados matriciais, contribuindo para a análise dos efeitos da urbanização sobre o escoamento superficial. Esse trabalho representa uma aplicação do sensoriamento remoto na caracterização ambiental de bacias hidrográficas, embora apresente objetivos distintos dos adotados na presente pesquisa.
+
+No Brasil, o projeto MapBiomas disponibiliza séries anuais de cobertura e uso da terra, produzidas a partir de imagens orbitais e procedimentos de classificação. \citeonline{souza2020} descrevem a utilização do acervo Landsat e do processamento em nuvem para reconstruir mudanças na cobertura da terra dos biomas brasileiros ao longo de aproximadamente três décadas.
+
+Apesar das possibilidades oferecidas pelo sensoriamento remoto, a resolução espacial influencia a representação das feições mapeadas. Em produtos com resolução de 30 m, fragmentos estreitos e pequenas áreas de vegetação podem não ser individualizados, especialmente quando diferentes coberturas ocorrem em uma mesma célula. Dessa forma, a interpretação dos mapas deve considerar as características do produto utilizado e a escala da análise.
+
+A utilização de diferentes fontes de informação geográfica também exige atenção à compatibilidade entre suas representações. No caso do CAR e do MapBiomas, a comparação envolve polígonos delimitados pelos declarantes e classes de cobertura da terra provenientes de classificação de imagens orbitais, que podem apresentar diferenças espaciais e temáticas.
+
+
+
+\subsection{Comparação entre dados declaratórios e mapeamento por sensoriamento remoto}
+
+O Cadastro Ambiental Rural e o MapBiomas representam informações ambientais produzidas por procedimentos distintos. Enquanto o CAR reúne feições geoespaciais autodeclaradas, o MapBiomas apresenta classes de cobertura e uso da terra obtidas por classificação de imagens orbitais. A comparação entre essas bases permite identificar áreas de correspondência e divergência espacial, mas não estabelece, isoladamente, qual representação corresponde às condições reais do território.
+
+A compatibilidade entre mapas depende da definição das classes utilizadas e dos procedimentos de classificação. \citeonline{neves2020}, ao compararem os produtos TerraClass e MapBiomas na Amazônia brasileira, demonstraram que diferenças entre legendas influenciam os resultados de concordância temática e espacial.
+
+\citeonline{pontius2011} discutem a importância de distinguir divergências relacionadas à quantidade de área atribuída às classes daquelas associadas à sua distribuição espacial. Essa abordagem demonstra que mapas podem apresentar proporções semelhantes de determinadas coberturas, mas diferir quanto à localização das feições representadas.
+
+Outro aspecto importante é a distinção entre concordância espacial e acurácia temática. \citeonline{foody2002} discute as limitações dos procedimentos de avaliação de classificações de cobertura da terra, enquanto \citeonline{olofsson2014} apresentam recomendações para estimativas de área e avaliação de acurácia com dados independentes de referência.
+
+\citeonline{olofsson2013} também destacam que os erros de classificação podem influenciar as estimativas de área obtidas diretamente de mapas temáticos. Dessa forma, a quantificação da correspondência entre duas bases não equivale necessariamente à validação de suas classificações.
+
+No presente estudo, a comparação entre os remanescentes de vegetação nativa declarados no CAR e as classes naturais do MapBiomas foi realizada por meio de sobreposição espacial. O índice de convergência representa a proporção da área declarada rasterizada que coincide com as classes consideradas naturais, sem constituir uma avaliação independente da acurácia do MapBiomas ou da regularidade ambiental dos imóveis rurais.
+
+
+\newpage
+
+\section{Materiais e métodos}
+
+\subsection{Caracterização da área de estudo}
+
+A área de estudo corresponde à bacia hidrográfica do rio Gramame, no litoral sul da Paraíba. O limite hidrográfico utilizado foi obtido junto à Agência Executiva de Gestão das Águas do Estado da Paraíba. A bacia possui aproximadamente 589,63 km² e intercepta Alhandra, Conde, Cruz do Espírito Santo, João Pessoa, Pedras de Fogo, Santa Rita e São Miguel de Taipu. As análises de área e distância foram realizadas em SIRGAS 2000 / UTM zona 25S, código EPSG:31985.
+
+A Figura~\ref{fig:localizacao} apresenta a localização em três níveis: Brasil e estado da Paraíba; estado e posição da bacia; e detalhe da bacia com os municípios interceptados.
+
+\begin{figure}[H]
+\centering
+\caption{Localização da bacia hidrográfica do rio Gramame}
+\mapaoumarcador{mapa_localizacao_bacia_rio_gramame.png}{\textwidth}
+\fontefigura{Elaboração própria (2026) com dados de IBGE, Malha Municipal Digital 2025; AESA, bacias hidrográficas da Paraíba.}
+\label{fig:localizacao}
+\end{figure}
+
+\subsection{Fontes e características dos dados}
+
+Foram integradas quatro fontes públicas de dados geoespaciais. Os dados do SICAR compreenderam os limites dos imóveis rurais e os remanescentes de vegetação nativa declarados pelos responsáveis pelos cadastros. O limite da bacia hidrográfica do rio Gramame foi obtido na AESA, enquanto a Malha Municipal Digital do IBGE foi utilizada como referência territorial. O MapBiomas Coleção 11 forneceu os dados matriciais de cobertura e uso da terra referentes ao ano de 2025, com resolução espacial nominal de 30 m. As fontes utilizadas, suas características, aplicações no estudo e respectivas datas de aquisição estão apresentadas na Tabela~\ref{tab:dados}.
+
+
+\begin{table}[H]
+\centering
+\caption{Dados geoespaciais empregados no estudo}
+\label{tab:dados}
+
+\begingroup
+\small
+\SingleSpacing
+
+% Espaçamento vertical
+\renewcommand{\arraystretch}{1.45}
+
+% Espaçamento horizontal
+\setlength{\tabcolsep}{5pt}
+
+\begin{tabularx}{\textwidth}{
+>{\RaggedRight\arraybackslash}p{2.9cm}
+>{\RaggedRight\arraybackslash}p{1.9cm}
+>{\RaggedRight\arraybackslash}X
+>{\centering\arraybackslash}p{2.0cm}
+}
+\toprule
+
+\textbf{Dado} &
+\textbf{Fonte} &
+\textbf{Características e uso} &
+\textbf{Aquisição} \\
+
+\midrule
+
+Imóveis rurais e vegetação declarada &
+SICAR &
+Vetores autodeclarados; recorte cadastral, controle topológico e cálculo de áreas. &
+3 out. 2026 \\
+
+Limite da bacia hidrográfica do rio Gramame &
+AESA &
+Vetor oficial; delimitação da unidade territorial de análise. &
+3 out. 2026 \\
+
+Municípios e unidades da Federação &
+IBGE &
+Malhas territoriais de 2025; referência cartográfica em SIRGAS 2000. &
+3 e 7 out. 2026 \\
+
+Cobertura e uso da terra &
+MapBiomas &
+Coleção 11 (2025); raster categórico com resolução espacial de 30 m. &
+3 out. 2026 \\
+
+\bottomrule
+\end{tabularx}
+
+\vspace{0.2cm}
+
+\fontefigura{Elaboração própria (2026), com dados do SICAR, AESA, IBGE e MapBiomas.}
+
+\endgroup
+\end{table}
+
+As datas de aquisição foram registradas para identificar as versões das bases utilizadas, considerando a possibilidade de atualizações e retificações nos dados do SICAR e de novas publicações do MapBiomas.
+
+\subsection{Sistema de referência e harmonização espacial}
+
+Os sistemas de referência das bases vetoriais foram verificados e padronizados para SIRGAS 2000 / UTM zona 25S (EPSG:31985), utilizado para os cálculos de área e as análises espaciais. O raster do MapBiomas foi recortado para a área de estudo, mantendo sua resolução espacial original de 30 m. Nos mapas de localização, foram utilizadas coordenadas geográficas em SIRGAS 2000, enquanto os produtos analíticos foram apresentados em coordenadas projetadas.
+
+\subsection{Ambiente computacional}
+
+O processamento e a análise dos dados geoespaciais foram realizados com o auxílio do Python e do QGIS. O Python foi utilizado na automação das operações espaciais e no cálculo das áreas, enquanto o QGIS auxiliou na manipulação das camadas, na análise dos resultados e na elaboração dos produtos cartográficos. As ferramentas computacionais e suas respectivas versões estão apresentadas na Tabela~\ref{tab:software}.
+
+
+\begin{table}[H]
+\centering
+\caption{Ferramentas computacionais utilizadas no processamento dos dados}
+\label{tab:software}
+
+\begingroup
+\small
+\SingleSpacing
+
+% Espaçamento vertical entre as linhas
+\renewcommand{\arraystretch}{1.40}
+
+% Espaçamento horizontal entre as colunas
+\setlength{\tabcolsep}{7pt}
+
+\begin{tabularx}{\textwidth}{
+>{\RaggedRight\arraybackslash}p{3.0cm}
+>{\centering\arraybackslash}p{2.5cm}
+>{\RaggedRight\arraybackslash}X
+}
+\toprule
+\textbf{Componente} &
+\textbf{Versão} &
+\textbf{Finalidade} \\
+\midrule
+
+Python &
+3.13.9 &
+Automação e execução dos procedimentos de processamento espacial \\
+
+GeoPandas &
+1.1.2 &
+Leitura, recorte, reprojeção e análise de dados vetoriais \\
+
+Rasterio &
+1.5.0 &
+Leitura, recorte e processamento de dados matriciais \\
+
+Shapely &
+2.1.2 &
+Validação, correção, união e operações geométricas \\
+
+QGIS &
+3.44.3 &
+Conferência dos dados, elaboração dos mapas e exportação cartográfica \\
+
+NumPy e Matplotlib &
+2.3.2 e 3.10.6 &
+Cálculos matriciais e elaboração de gráficos auxiliares \\
+
+\bottomrule
+\end{tabularx}
+
+\vspace{0.20cm}
+
+\fontefigura{Elaboração própria (2026).}
+
+\endgroup
+\end{table}
+
+\subsection{Preparação e controle de qualidade}
+
+As camadas foram recortadas conforme os limites da bacia hidrográfica do rio Gramame. Em seguida, foram verificadas a existência de geometrias vazias e inválidas. A função \textit{make valid} foi aplicada às geometrias inválidas, e a camada de imóveis foi restringida aos tipos poligonais \textit{Polygon} e \textit{MultiPolygon}, compatíveis com as operações de área empregadas no estudo.
+
+A duplicidade geométrica foi verificada pela comparação da representação normalizada de cada geometria. Duas ou mais feições foram marcadas quando possuíam exatamente a mesma geometria, ainda que apresentassem códigos cadastrais diferentes. O indicador de duplicidade contabilizou todos os registros pertencentes a esses grupos, e não a quantidade de feições eliminadas. Os registros foram preservados para manter a rastreabilidade cadastral; a dupla contagem de área foi evitada posteriormente pela união geométrica.
+
+Para quantificar a vegetação nativa declarada, foram calculadas as áreas pelo somatório individual dos polígonos e pela união geométrica das feições. A diferença entre esses valores permitiu identificar a área contabilizada mais de uma vez devido às sobreposições. Nas análises espaciais, foi considerada a área resultante da união dos polígonos, evitando a dupla contagem. Esse procedimento também considera os problemas topológicos discutidos por \citeonline{matias2024}.
+
+\subsection{Classificação temática e cálculo do índice}
+
+
+A vegetação nativa declarada no CAR foi convertida para o formato raster, utilizando a mesma grade espacial do MapBiomas, com resolução de 30 m. A seleção das classes naturais foi conferida na legenda oficial da Coleção 11 do MapBiomas, no nível 2 da hierarquia temática. Foram incluídos os códigos 3 (Formação Florestal), 6 (Floresta Alagável), 4 (Formação Savânica), 7 (Savana Alagada, classe beta), 5 (Mangue), 49 (Restinga Arbórea), 11 (Campo Alagado e Área Pantanosa), 77 (Formação Herbácea Arbustiva), 12 (Formação Campestre), 84 (Marisma, classe beta), 50 (Restinga Herbácea ou Arbustiva), 32 (Apicum) e 29 (Afloramento Rochoso). Esses códigos correspondem às subclasses dos agrupamentos naturais ``Formação Florestal'' e ``Vegetação Herbácea e Arbustiva''; não foram incluídas classes de agropecuária, áreas não vegetadas ou corpos d'água \cite{mapbiomaslegenda2026}.
+
+O índice de convergência espacial (IC) foi calculado pela Equação~\ref{eq:ic}:
+
+\begin{equation}
+IC = \frac{A_{CAR \cap NAT}}{A_{CAR, válida}} \times 100
+\label{eq:ic}
+\end{equation}
+
+\noindent em que $A_{CAR \cap NAT}$ corresponde à área de vegetação declarada coincidente com as classes naturais do MapBiomas, e $A_{CAR, válida}$ representa a área dos pixels válidos do MapBiomas localizados dentro da máscara das declarações. O índice foi expresso em porcentagem.
+
+Também foram quantificadas as áreas declaradas que não coincidiram com classes naturais e as áreas de cobertura natural identificadas pelo MapBiomas dentro dos imóveis rurais, mas fora dos polígonos de vegetação declarada. Na conversão dos vetores para raster, foi adotado o critério do centro do pixel, mantendo a resolução espacial de 30 m.
+
+\subsection{Validação e rastreabilidade}
+
+A consistência dos dados e dos resultados foi avaliada por meio de procedimentos estruturais, geométricos, quantitativos e cartográficos, apresentados na Tabela~\ref{tab:validacao}. As análises incluíram a verificação das geometrias, a conferência dos cálculos de área e a inspeção dos resultados no QGIS. Também foram realizados testes automatizados com dados sintéticos para verificar as operações de união geométrica e cruzamento raster-vetor.
+
+
+\begin{table}[H]
+\centering
+\caption{Procedimentos de verificação da consistência dos dados e resultados}
+\label{tab:validacao}
+
+\begingroup
+\small
+\SingleSpacing
+
+% Espaçamento vertical
+\renewcommand{\arraystretch}{1.45}
+
+% Espaçamento horizontal
+\setlength{\tabcolsep}{6pt}
+
+\begin{tabularx}{\textwidth}{
+>{\RaggedRight\arraybackslash}p{2.2cm}
+>{\RaggedRight\arraybackslash}X
+>{\RaggedRight\arraybackslash}p{3.6cm}
+}
+\toprule
+
+\textbf{Nível} &
+\textbf{Procedimento} &
+\textbf{Evidência} \\
+
+\midrule
+
+Estrutural &
+Conferência dos campos, sistemas de referência, extensão espacial e quantidade de feições &
+Inventário dos dados e metadados \\
+
+Geométrico &
+Identificação de geometrias ausentes, vazias, inválidas e duplicadas, com verificação das correções &
+Relatório de qualidade das camadas \\
+
+Quantitativo &
+Comparação entre áreas vetoriais e rasterizadas e conferência dos indicadores calculados &
+Tabelas de áreas e indicadores \\
+
+Cartográfico &
+Conferência das sobreposições, limites espaciais e elementos dos mapas &
+Projeto QGIS e mapas finais \\
+
+\bottomrule
+\end{tabularx}
+
+\vspace{0.20cm}
+
+\fontefigura{Elaboração própria (2026).}
+
+\endgroup
+\end{table}
+
+Na verificação quantitativa, foi conferido se a soma das áreas classificadas como naturais e não naturais correspondia à área válida da máscara rasterizada. Também foram comparadas as áreas obtidas pelos procedimentos vetorial e matricial, considerando as diferenças associadas à representação dos limites dos polígonos em células de 30 m.
+
+\subsection{Fluxo metodológico e reprodutibilidade}
+
+As etapas da pesquisa foram organizadas em um fluxograma, desde a obtenção e preparação dos dados até o cruzamento espacial entre o CAR e o MapBiomas e a análise dos resultados. O procedimento compreendeu a verificação das bases geoespaciais, o tratamento das geometrias, o cálculo das áreas e a identificação das concordâncias e divergências espaciais, conforme apresentado na Figura~\ref{fig:fluxo}.
+
+\begin{figure}[H]
+\centering
+\caption{Fluxo metodológico da pesquisa}
+\mapaoumarcador{fluxograma_metodologico.png}{0.95\textwidth}
+\fontefigura{Elaboração própria (2026).}
+\label{fig:fluxo}
+\end{figure}
+
+Os procedimentos foram desenvolvidos com o auxílio do Python e do QGIS, permitindo a reprodução das análises a partir das bases de dados e dos critérios metodológicos adotados.
+
+\subsection{Limitações metodológicas}
+
+A comparação entre o CAR e o MapBiomas apresenta limitações relacionadas às características das bases utilizadas. Enquanto o CAR reúne informações autodeclaradas, com diferentes datas de cadastro e níveis de precisão espacial, o MapBiomas apresenta uma classificação da cobertura e uso da terra com resolução de 30 m, sujeita a incertezas de classificação. Essas diferenças podem influenciar os resultados, principalmente nas bordas dos polígonos e em fragmentos estreitos de vegetação. Além disso, as informações declaradas no CAR não correspondem necessariamente às condições da cobertura da terra em 2025.
+
+A concordância espacial entre as bases não comprova a regularidade ambiental dos imóveis, assim como as divergências identificadas não representam, necessariamente, erros cadastrais. O estudo também não incluiu análises temporais, imagens de maior resolução ou verificações em campo. Dessa forma, os resultados permitem identificar áreas que merecem uma análise mais detalhada, mas não substituem os procedimentos de avaliação realizados pelos órgãos ambientais competentes.
+
+\newpage
+
+
+\section{Resultados e discussão}
+
+\subsection{Qualidade e abrangência das bases}
+
+A camada original de imóveis rurais continha 3.820 registros. Antes do controle geométrico, foram excluídos 230 cadastros com situação cancelada, restando 3.590 feições ativas ou pendentes como entrada da auditoria. Foram identificadas quatro geometrias inválidas. Após a aplicação de \textit{make valid}, duas permaneceram como \textit{MultiPolygon} e foram mantidas; as outras duas tornaram-se \textit{GeometryCollection}, compostas por partes poligonais e lineares, e foram excluídas da camada estritamente poligonal. Essa exclusão, e não as duplicidades, explica a redução de 3.590 para 3.588 feições. As duas feições excluídas não interceptavam a bacia hidrográfica do rio Gramame.
+
+O indicador de duplicidade assinalou 98 feições distribuídas em 48 grupos de geometrias exatamente iguais: 46 grupos com duas feições e dois grupos com três feições. Como cada registro possuía código cadastral distinto, todos foram preservados. Entre os 1.974 registros que interceptaram a bacia, 64 pertenciam a 31 grupos de geometria idêntica. Assim, o valor de 1.974 representa registros cadastrais interceptados, e não polígonos espacialmente exclusivos; as áreas foram calculadas a partir da união geométrica para impedir dupla contagem. Na camada de vegetação nativa declarada, foram analisados 279 polígonos, sem geometrias ausentes, vazias ou inválidas; duas feições formavam um grupo de geometria idêntica e também foram mantidas. Os resultados do controle de qualidade estão apresentados na Tabela~\ref{tab:qc}.
+
+
+\begin{table}[H]
+\centering
+\caption{Síntese do controle de qualidade geométrica}
+\label{tab:qc}
+
+\begingroup
+\small
+\SingleSpacing
+
+\renewcommand{\arraystretch}{1.5}
+\setlength{\tabcolsep}{3pt}
+
+\begin{tabularx}{\textwidth}{
+>{\RaggedRight\arraybackslash}X
+*{5}{>{\centering\arraybackslash}p{1.65cm}}
+}
+\toprule
+
+\textbf{Camada} &
+\textbf{Entrada} &
+\textbf{Inválidas} &
+\textbf{Reparadas} &
+\shortstack{\textbf{Feições em}\\\textbf{geometrias}\\\textbf{idênticas}} &
+\textbf{Saída} \\
+
+\midrule
+
+Área de estudo &
+1 & 0 & 0 & 0 & 1 \\
+
+Imóveis rurais &
+3.590 & 4 & 4 & 98 & 3.588 \\
+
+Vegetação declarada &
+279 & 0 & 0 & 2 & 279 \\
+
+\bottomrule
+\end{tabularx}
+
+\vspace{0.20cm}
+
+\fontefigura{Elaboração própria (2026). Nota: a coluna de geometrias idênticas contabiliza todos os registros pertencentes aos grupos e não representa feições removidas.}
+
+\endgroup
+\end{table}
+
+
+A identificação de geometrias inválidas e de registros com geometria idêntica evidencia a importância do controle de qualidade antes das operações espaciais. A preservação dos registros mantém a correspondência com os códigos do SICAR, enquanto a união geométrica impede que superfícies coincidentes sejam contabilizadas mais de uma vez. A distinção entre contagem cadastral e área espacialmente exclusiva foi mantida em toda a apresentação dos resultados.
+
+\subsection{Vegetação nativa declarada}
+
+A área conjunta dos imóveis rurais que interceptaram a bacia hidrográfica do rio Gramame totalizou 43.107,26 ha. O somatório das áreas dos polígonos de vegetação nativa declarada foi de 8.278,86 ha, enquanto a união geométrica resultou em 8.224,30 ha. A diferença de 54,56 ha, equivalente a 0,66\% do somatório, corresponde à área contabilizada mais de uma vez devido às sobreposições entre polígonos. Considerando a área espacialmente distinta, a vegetação declarada representou aproximadamente 19,08\% da área conjunta dos imóveis analisados.
+
+Os polígonos de vegetação declarada apresentaram área média de 29,67 ha e mediana de 2,59 ha. Essa diferença indica uma distribuição assimétrica, caracterizada pela presença de numerosos fragmentos de menor extensão e de polígonos maiores que elevam a média. A distribuição espacial da vegetação declarada na bacia está apresentada na Figura~\ref{fig:vegetacao}.
+
+\begin{figure}[H]
+\centering
+\caption{Distribuição da vegetação nativa declarada no CAR na bacia do rio Gramame}
+\mapaoumarcador{mapa_02_vegetacao_declarada.png}{\textwidth}
+\fontefigura{Elaboração própria (2026) com dados do SICAR e AESA.}
+\label{fig:vegetacao}
+\end{figure}
+
+\subsection{Convergência com o MapBiomas 2025}
+
+A conversão dos polígonos de vegetação declarada para a grade do MapBiomas resultou em 8.224,74 ha de pixels válidos, com diferença de 0,44 ha em relação à área obtida pela união vetorial. Desse total, 5.235,93 ha coincidiram com classes naturais, enquanto 2.988,81 ha corresponderam a classes não naturais.
+Com base na Equação~\ref{eq:ic}, o índice de convergência espacial foi de:
+
+\begin{equation}
+IC = \frac{5\,235{,}93}{8\,224{,}74} \times 100 = 63{,}66\%.
+\end{equation}
+
+O resultado indica que a maior parte da vegetação nativa declarada apresentou correspondência com as classes naturais do MapBiomas. Entretanto, os 36,34\% restantes, equivalentes a 2.988,81 ha, demonstram a existência de divergências espaciais relevantes entre as bases. Os principais indicadores da comparação estão apresentados na Tabela~\ref{tab:indicadores}.
+
+
+\begin{table}[H]
+\centering
+\caption{Indicadores gerais da comparação espacial}
+\label{tab:indicadores}
+
+\begingroup
+\small
+\SingleSpacing
+
+% Espaçamento vertical entre as linhas
+\renewcommand{\arraystretch}{1.45}
+
+% Espaçamento horizontal entre as colunas
+\setlength{\tabcolsep}{8pt}
+
+\begin{tabularx}{\textwidth}{
+>{\RaggedRight\arraybackslash}X
+>{\raggedleft\arraybackslash}p{3.0cm}
+}
+\toprule
+
+\textbf{Indicador} & \textbf{Resultado} \\
+\midrule
+
+Imóveis rurais interceptados & 1.974 \\
+
+Vegetação declarada espacialmente distinta & 8.224,30 ha \\
+
+Sobreposição entre polígonos declarados & 54,56 ha \\
+
+Área declarada rasterizada válida & 8.224,74 ha \\
+
+Área declarada coincidente com classes naturais & 5.235,93 ha \\
+
+Área declarada em classes não naturais & 2.988,81 ha \\
+
+Índice de convergência espacial & 63,66\% \\
+
+Área natural nos imóveis fora da declaração & 3.012,30 ha \\
+
+\bottomrule
+\end{tabularx}
+
+\vspace{0.20cm}
+
+\fontefigura{Elaboração própria (2026), com dados do SICAR e MapBiomas Coleção 11.}
+
+\endgroup
+\end{table}
+
+Entre as classes naturais identificadas nos polígonos declarados, predominou a formação florestal, com 4.235,94 ha, seguida por campo alagado e área pantanosa (540,54 ha) e mangue (334,26 ha). Também foram identificadas áreas de formação savânica e apicum, em menores proporções.
+
+Nas áreas sem correspondência com classes naturais, destacaram-se pastagem (1.206,81 ha) e mosaico de usos (1.197,27 ha). Juntas, essas duas classes representaram aproximadamente 80,44\% da área divergente. A distribuição das principais classes de cobertura e uso da terra está apresentada na Tabela~\ref{tab:classes}.
+
+
+\begin{table}[H]
+\centering
+\caption{Principais classes do MapBiomas na vegetação declarada}
+\label{tab:classes}
+
+\begingroup
+\small
+\SingleSpacing
+
+% Espaçamento vertical
+\renewcommand{\arraystretch}{1.45}
+
+% Espaçamento horizontal
+\setlength{\tabcolsep}{7pt}
+
+\begin{tabularx}{\textwidth}{
+>{\RaggedRight\arraybackslash}X
+>{\RaggedRight\arraybackslash}p{3.3cm}
+>{\raggedleft\arraybackslash}p{2.2cm}
+}
+\toprule
+
+\textbf{Classe} &
+\textbf{Agrupamento analítico} &
+\textbf{Área (ha)} \\
+
+\midrule
+
+Formação florestal & Natural & 4.235,94 \\
+
+Campo alagado e área pantanosa & Natural & 540,54 \\
+
+Mangue & Natural & 334,26 \\
+
+Formação savânica & Natural & 115,20 \\
+
+Apicum & Natural & 9,99 \\
+
+Pastagem & Não natural & 1.206,81 \\
+
+Mosaico de usos & Não natural & 1.197,27 \\
+
+Cana-de-açúcar & Não natural & 334,71 \\
+
+Outras lavouras temporárias & Não natural & 174,96 \\
+
+Demais classes não naturais & Não natural & 75,06 \\
+
+\bottomrule
+\end{tabularx}
+
+\vspace{0.20cm}
+
+\fontefigura{Elaboração própria (2026), com dados do MapBiomas Coleção 11 e do SICAR.}
+
+\endgroup
+\end{table}
+
+A predominância de pastagens e mosaicos de usos entre as áreas divergentes indica que as diferenças se concentram principalmente em classes associadas às atividades agropecuárias. Entretanto, essa correspondência temática não permite determinar, isoladamente, se houve alteração da cobertura vegetal, imprecisão na declaração ou diferenças decorrentes dos procedimentos de classificação.
+
+Além disso, foram identificados 3.012,30 ha de cobertura natural mapeada pelo MapBiomas dentro dos imóveis rurais, mas fora dos polígonos de vegetação nativa declarada analisados. Essas áreas não representam necessariamente omissões cadastrais, pois podem estar relacionadas a outras categorias ambientais do CAR ou a diferenças entre as bases utilizadas.
+
+A distribuição espacial das áreas coincidentes e divergentes pode ser observada na Figura~\ref{fig:convergencia}.
+
+\begin{figure}[H]
+\centering
+\caption{Convergência espacial entre a vegetação declarada no CAR e as classes naturais do MapBiomas em 2025}
+\mapaoumarcador{mapa_03_convergencia_car_mapbiomas.png}{\textwidth}
+\fontefigura{Elaboração própria (2026) com dados de SICAR e MapBiomas Coleção 11.}
+\label{fig:convergencia}
+\end{figure}
+
+\subsection{Interpretação e limitações}
+
+A divergência identificada em 36,34\% da área declarada deve ser interpretada considerando as diferenças entre as bases analisadas. O CAR reúne informações autodeclaradas, enquanto o MapBiomas apresenta classificações da cobertura e uso da terra obtidas por sensoriamento remoto. As diferenças podem estar associadas à data das declarações, à precisão dos limites, às mudanças na cobertura da terra e às incertezas de classificação, especialmente nas bordas e em fragmentos de menor extensão.
+
+A interpretação das divergências também deve considerar as características dos procedimentos de classificação e a resolução espacial das imagens utilizadas. Conforme discutido por \citeonline{foody2002}, os mapas temáticos estão sujeitos a incertezas que devem ser consideradas em suas aplicações. Dessa forma, a diferença entre a vegetação declarada e a cobertura mapeada não pode ser atribuída exclusivamente a inconsistências cadastrais.
+
+A predominância de pastagens e mosaicos de usos entre as classes divergentes também deve ser analisada com cautela. A heterogeneidade dessas paisagens, associada à resolução espacial de 30 m, pode dificultar a representação de pequenos fragmentos de vegetação. Além disso, as condições identificadas pelo MapBiomas em 2025 não correspondem necessariamente àquelas existentes no momento da declaração do CAR.
+
+A utilização de imagens de maior resolução e de séries temporais poderia contribuir para o esclarecimento dessas diferenças. No entanto, como destacam \citeonline{olofsson2014}, uma avaliação formal de acurácia requer dados independentes de referência e procedimentos amostrais adequados. Portanto, o índice calculado neste estudo deve ser interpretado como uma medida de convergência espacial, e não como uma estimativa de acurácia temática.
+
+Conforme discutido por \citeonline{neves2020}, diferenças entre legendas e procedimentos metodológicos podem influenciar a concordância entre produtos de cobertura da terra. Nesse sentido, o índice calculado representa a convergência espacial entre as bases, não constituindo uma medida de acurácia temática ou de regularidade ambiental dos imóveis.
+
+Apesar dessas limitações, a comparação permitiu identificar áreas que podem ser priorizadas em análises complementares, mediante consulta às demais informações do CAR, avaliação de imagens de maior resolução e análise da evolução temporal da cobertura da terra. Essa aplicação está relacionada ao potencial do cadastro como instrumento de apoio à gestão ambiental e territorial, discutido por \citeonline{roitman2018}.
+
+
+\subsection{Distribuição temática das divergências}
+
+As maiores divergências entre a vegetação declarada no CAR e as classes naturais do MapBiomas ocorreram em áreas classificadas como pastagem e mosaico de usos, que juntas representaram 2.404,08 ha. A predominância dessas classes indica que parte dos polígonos declarados apresenta cobertura associada a atividades agropecuárias no mapeamento de 2025. Entretanto, essa diferença não permite determinar se houve alteração da vegetação após a declaração, imprecisão na delimitação dos polígonos ou divergências decorrentes dos métodos de classificação.
+
+A classe mosaico de usos merece atenção por representar áreas com diferentes formas de ocupação, nas quais podem existir pequenos fragmentos de vegetação natural. Devido à resolução espacial de 30 m, algumas feições de menor extensão podem não ser individualizadas, especialmente nas margens de cursos d'água e nas bordas dos fragmentos. Essas características podem contribuir para as diferenças observadas entre as bases.
+
+As áreas classificadas como cana-de-açúcar e outras lavouras temporárias totalizaram 509,67 ha dentro dos polígonos declarados. A presença dessas classes reforça a importância de considerar o histórico da cobertura da terra, uma vez que as condições identificadas pelo MapBiomas em 2025 podem não corresponder àquelas existentes na data da declaração. A análise de imagens de diferentes períodos permitiria investigar essas alterações e compreender melhor as divergências identificadas.
+
+
+\subsection{Sensibilidade e possibilidades de aprofundamento}
+
+Os resultados também estão sujeitos às escolhas metodológicas adotadas no processamento, especialmente à resolução espacial de 30 m, ao critério de inclusão dos pixels e à definição das classes consideradas naturais. A utilização do centro do pixel como referência pode influenciar a representação de fragmentos estreitos e das bordas dos polígonos, alterando a área de correspondência entre as bases.
+
+Embora o índice de convergência permita quantificar a concordância espacial entre o CAR e o MapBiomas, sua interpretação deve considerar essas limitações. Estudos posteriores poderão avaliar a influência de diferentes critérios de rasterização, incorporar séries temporais de cobertura da terra e utilizar imagens de maior resolução para investigar as áreas divergentes.
+
+A realização de uma avaliação independente de acurácia, com amostragem adequada e dados de referência, também permitiria examinar as incertezas associadas à classificação da cobertura da terra. Essas análises complementariam os resultados apresentados, sem alterar o caráter exploratório e territorial da comparação realizada neste estudo.
+
+\section{Considerações finais}
+
+A análise da vegetação nativa declarada no Cadastro Ambiental Rural (CAR) na bacia hidrográfica do rio Gramame permitiu identificar 8.224,30 ha de vegetação declarada espacialmente distinta, distribuídos em 279 polígonos associados ao recorte de 1.974 imóveis rurais. A identificação de sobreposições entre os polígonos demonstrou a importância do tratamento geométrico para evitar a dupla contagem das áreas.
+
+A comparação com o MapBiomas Coleção 11, referente ao ano de 2025, apresentou índice de convergência espacial de 63,66\%. A formação florestal predominou entre as classes naturais coincidentes, enquanto pastagem e mosaico de usos concentraram a maior parte das divergências. Também foram identificados 3.012,30 ha de cobertura natural dentro dos imóveis rurais, mas fora dos polígonos de vegetação nativa declarada analisados.
+
+Os resultados demonstram que a integração entre o CAR e o MapBiomas pode contribuir para a identificação de divergências espaciais e apoiar o direcionamento de análises ambientais mais detalhadas. Entretanto, essas diferenças não devem ser interpretadas isoladamente como irregularidades cadastrais ou ambientais, considerando as limitações relacionadas às datas de referência, à resolução espacial e aos procedimentos de classificação das bases utilizadas.
+
+Para trabalhos futuros, recomenda-se incorporar análises temporais da cobertura da terra, imagens de maior resolução e avaliações de sensibilidade dos critérios de comparação, buscando compreender melhor as divergências identificadas.
+
+
+\label{pag:fim-texto}
+\newpage
+\postextual
+\phantomsection
+\addcontentsline{toc}{section}{Referências}
+\renewcommand{\bibsection}{\section*{Referências}}
+\SingleSpacing
+\bibliography{referencias}
+\OnehalfSpacing
+
+\tituloapendice{A}{REPOSITÓRIO COMPUTACIONAL E INSTRUÇÕES DE EXECUÇÃO}
+
+Os arquivos computacionais produzidos nesta pesquisa foram organizados em um repositório próprio, com separação entre código-fonte, arquivo de configuração, caderno Jupyter e teste sintético. O endereço definitivo do repositório é \repositoriogithub. Após a publicação, recomenda-se registrar no texto a versão ou o identificador do commit utilizado para gerar os resultados apresentados.
+
+O repositório possui a seguinte organização:
+
+\begin{itemize}
+  \item \texttt{src/gramame\_car\_mapbiomas/}: funções de preparação vetorial, cruzamento raster-vetor, cálculo dos indicadores e geração dos produtos cartográficos;
+  \item \texttt{config/}: arquivos de configuração de exemplo para execução local e no Google Colab;
+  \item \texttt{notebooks/}: caderno Jupyter com as etapas da análise;
+  \item \texttt{tests/}: teste sintético que verifica a união geométrica sem dupla contagem e o cálculo da convergência;
+  \item \texttt{assets/}: símbolo cartográfico de orientação utilizado nos mapas.
+\end{itemize}
+
+Para execução local, deve-se instalar o pacote com \texttt{python -m pip install -e ".[dev]"}, copiar \texttt{config/gramame.example.yaml} para \texttt{config/gramame.yaml}, ajustar os caminhos dos dados e executar \texttt{python -m gramame\_car\_mapbiomas --config config/gramame.yaml}. No Google Colab, o caderno monta o Google Drive e utiliza o arquivo \texttt{config/gramame.colab.example.yaml}; os arquivos geoespaciais devem ser armazenados no Drive porque não integram o repositório de código.
+
+\tituloapendice{B}{ARQUIVO DE CONFIGURAÇÃO DA ANÁLISE}
+
+O Código~\ref{cod:configuracao} apresenta a configuração de referência. Os caminhos e os nomes das camadas devem ser adequados aos arquivos efetivamente obtidos das fontes oficiais.
+
+\codigoarquivo{}{Configuração de referência da análise espacial}{cod:configuracao}{codigos/gramame.example.yaml}
+
+\tituloapendice{C}{CÓDIGOS CENTRAIS DO PROCESSAMENTO GEOESPACIAL}
+
+Os Códigos~\ref{cod:pipeline} a~\ref{cod:vetor} documentam as rotinas centrais utilizadas para encadear o processamento, calcular o índice de convergência e tratar as geometrias vetoriais. O caderno Jupyter, as rotinas cartográficas, a interface de linha de comando e o teste sintético permanecem disponíveis integralmente no repositório indicado no Apêndice~A.
+
+\codigoarquivo{Python}{Encadeamento do processamento e geração dos produtos}{cod:pipeline}{codigos/pipeline.py}
+
+\codigoarquivo{Python}{Cruzamento raster-vetor e cálculo do índice de convergência}{cod:raster}{codigos/raster.py}
+
+\codigoarquivo{Python}{Limpeza, recorte, união e indicadores vetoriais}{cod:vetor}{codigos/vector.py}
+
+\end{document}

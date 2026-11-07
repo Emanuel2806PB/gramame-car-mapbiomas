@@ -19,6 +19,8 @@ config/       configuração de exemplo e códigos temáticos
 notebooks/    roteiro executável da análise
 src/          pacote Python do processamento geoespacial
 tests/        teste sintético independente dos dados reais
+tcc/          texto acadêmico em LaTeX, bibliografia, figuras e fluxogramas
+apresentacao/  apresentação Beamer em LaTeX
 pyproject.toml
 ```
 
@@ -86,6 +88,30 @@ O notebook também contém uma célula específica para o Colab. Antes da primei
 3. copie o arquivo de exemplo para `config/gramame.colab.yaml`, se precisar alterar caminhos ou nomes das camadas, e execute as demais células.
 
 O botão “Abrir no Google Colab” utiliza diretamente a versão publicada neste repositório.
+
+## Texto acadêmico e apresentação
+
+O Trabalho de Conclusão de Curso está em `tcc/main.tex`. A apresentação da defesa está em `apresentacao/apresentacao.tex`. Ambos utilizam XeLaTeX.
+
+Para compilar o TCC em um ambiente com TeX Live e `latexmk`:
+
+```bash
+./scripts/compile_tcc.sh
+```
+
+Para compilar a apresentação:
+
+```bash
+./scripts/compile_apresentacao.sh
+```
+
+Os arquivos PDF e os auxiliares de compilação não são versionados. O repositório mantém apenas os fontes necessários para editar e reproduzir os documentos.
+
+## Uso no Codex Cloud
+
+Conecte este repositório ao Codex Cloud e selecione-o ao criar um ambiente. As instruções acadêmicas e operacionais estão em `AGENTS.md`. O script `.codex/setup.sh` pode ser usado como instalação inicial do ambiente Linux.
+
+Os dados geoespaciais reais permanecem fora do GitHub. Tarefas que dependam desses dados devem usar arquivos fornecidos explicitamente ao ambiente ou trabalhar com o teste sintético incluído no repositório.
 
 ## Produtos
 

@@ -1,0 +1,381 @@
+% !TeX program = xelatex
+\documentclass[aspectratio=169,10pt]{beamer}
+
+\usepackage{fontspec}
+\IfFontExistsTF{Arial}{
+  \setsansfont{Arial}
+  \setmainfont{Arial}
+}{
+  \setsansfont{TeX Gyre Heros}
+  \setmainfont{TeX Gyre Heros}
+}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[brazilian]{babel}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\definecolor{AzulEscuro}{HTML}{183653}
+\definecolor{AzulMedio}{HTML}{2E6F9E}
+\definecolor{AzulClaro}{HTML}{E8F1F6}
+\definecolor{Verde}{HTML}{2A8C62}
+\definecolor{Laranja}{HTML}{D87C3F}
+\definecolor{Cinza}{HTML}{5F6B73}
+\definecolor{CinzaClaro}{HTML}{EDF1F3}
+
+\setbeamercolor{normal text}{fg=AzulEscuro,bg=white}
+\setbeamercolor{structure}{fg=AzulEscuro}
+\setbeamercolor{frametitle}{fg=AzulEscuro,bg=white}
+\setbeamercolor{alerted text}{fg=Laranja}
+\setbeamerfont{normal text}{size=\fontsize{15}{18}}
+\setbeamerfont{frametitle}{size=\fontsize{21}{24},series=\bfseries}
+\setbeamerfont{title}{size=\fontsize{27}{31},series=\bfseries}
+\setbeamerfont{subtitle}{size=\fontsize{16}{20}}
+\setbeamerfont{footline}{size=\fontsize{8.5}{10}}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize item}{\color{Verde}\raise0.2ex\hbox{\rule{0.7ex}{0.7ex}}}
+\setbeamertemplate{itemize subitem}{\color{AzulMedio}\raise0.2ex\hbox{\rule{0.55ex}{0.55ex}}}
+\setlength{\leftmargini}{1.2em}
+
+\setbeamertemplate{frametitle}{%
+  \vspace{0.28cm}
+  \insertframetitle\par
+  \vspace{0.10cm}
+  {\color{AzulMedio}\rule{\textwidth}{0.7pt}}
+}
+\setbeamertemplate{footline}{%
+  \leavevmode
+  \hbox{%
+    \begin{beamercolorbox}[wd=.87\paperwidth,ht=2.5ex,dp=1.1ex,leftskip=.55cm]{normal text}%
+      \color{Cinza}Emanuel Gomes Soares \hspace{0.7em} | \hspace{0.7em} TCC em Geoprocessamento
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.13\paperwidth,ht=2.5ex,dp=1.1ex,rightskip=.5cm plus1fil]{normal text}%
+      \color{Cinza}\hfill\insertframenumber/\inserttotalframenumber
+    \end{beamercolorbox}%
+  }
+}
+
+\newcommand{\fonte}[1]{\vspace{0.08cm}{\fontsize{8}{9.5}\selectfont\color{Cinza}Fonte: #1\par}}
+\newcommand{\numero}[2]{%
+  {\color{#1}\fontsize{28}{31}\selectfont\bfseries #2}%
+}
+\newcommand{\figuraoumarcador}[2]{%
+  \IfFileExists{figuras/#1}{\includegraphics[#2]{figuras/#1}}{%
+    \fbox{\parbox[c][5.3cm][c]{0.90\linewidth}{\centering Figura a incluir no Overleaf: \\ \texttt{\detokenize{#1}}}}}%
+}
+
+\title{Convergência espacial entre a vegetação nativa declarada no CAR e o MapBiomas}
+\subtitle{Bacia hidrográfica do rio Gramame, Paraíba}
+\author{Emanuel Gomes Soares}
+\institute{Especialização em Geoprocessamento\\Instituto Federal Baiano}
+\date{2026}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \vspace{0.55cm}
+  {\color{AzulMedio}\rule{1.5cm}{3pt}}\par
+  \vspace{0.55cm}
+  {\usebeamerfont{title}\color{AzulEscuro}\inserttitle\par}
+  \vspace{0.35cm}
+  {\usebeamerfont{subtitle}\color{Cinza}\insertsubtitle\par}
+  \vfill
+  {\large\bfseries\insertauthor\par}
+  \vspace{0.18cm}
+  {\normalsize\color{Cinza}\insertinstitute\par}
+  \vspace{0.18cm}
+  {\normalsize\color{Cinza}\insertdate\par}
+  \vspace{0.45cm}
+\end{frame}
+
+\begin{frame}{Problema de pesquisa}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.57\textwidth}
+      \vspace{0.35cm}
+      O CAR reúne geometrias ambientais \textbf{autodeclaradas}. O MapBiomas representa a cobertura da terra a partir de imagens orbitais.
+
+      \vspace{0.45cm}
+      A comparação entre as bases pode localizar concordâncias e divergências, desde que sejam considerados:
+
+      \begin{itemize}
+        \item diferenças de data e finalidade
+        \item resolução espacial de 30 m
+        \item sobreposições e problemas geométricos
+        \item incertezas da classificação temática.
+      \end{itemize}
+    \column{0.38\textwidth}
+      \vspace{0.45cm}
+      {\color{AzulMedio}\rule{\linewidth}{1pt}}\par
+      \vspace{0.35cm}
+      {\Large\bfseries Questão central}\par
+      \vspace{0.25cm}
+      Em que proporção a vegetação nativa declarada no CAR coincide espacialmente com classes naturais do MapBiomas em 2025?
+  \end{columns}
+  \fonte{Brasil (2012), Souza Jr. et al. (2020) e MapBiomas Coleção 11.}
+\end{frame}
+
+\begin{frame}{Objetivo}
+  \vspace{0.35cm}
+  {\Large\bfseries Caracterizar a vegetação nativa declarada no CAR na bacia do rio Gramame e avaliar sua convergência espacial com as classes naturais do MapBiomas em 2025.}\par
+
+  \vspace{0.65cm}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.31\textwidth}
+      \numero{AzulMedio}{01}\par
+      Auditar a qualidade geométrica das bases.
+    \column{0.31\textwidth}
+      \numero{Verde}{02}\par
+      Quantificar áreas sem dupla contagem.
+    \column{0.31\textwidth}
+      \numero{Laranja}{03}\par
+      Localizar concordâncias e divergências.
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Área de estudo}
+  \centering
+  \figuraoumarcador{mapa_localizacao_bacia_rio_gramame.png}{width=0.90\textwidth,height=0.75\textheight,keepaspectratio}
+  \fonte{IBGE, Malha Municipal Digital 2025, e AESA, bacias hidrográficas da Paraíba. Elaboração própria (2026).}
+\end{frame}
+
+\begin{frame}{Bases de dados}
+  \vspace{0.15cm}
+  \renewcommand{\arraystretch}{1.35}
+  \begin{tabular}{>{\bfseries\RaggedRight\arraybackslash}p{2.4cm} p{3.1cm} p{5.3cm}}
+    \toprule
+    Fonte & Dado & Uso na análise \\
+    \midrule
+    SICAR & Imóveis e vegetação declarada & Recorte cadastral, auditoria e cálculo de áreas \\
+    AESA & Limite da bacia do Gramame & Unidade territorial do estudo \\
+    IBGE & Malha municipal de 2025 & Referência cartográfica \\
+    MapBiomas & Coleção 11, ano de 2025 & Cobertura e uso da terra em 30 m \\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{0.45cm}
+  \textbf{Referência espacial:} SIRGAS 2000 / UTM zona 25S, EPSG:31985.
+
+  \fonte{Dados adquiridos em outubro de 2026 nas fontes oficiais.}
+\end{frame}
+
+\begin{frame}{Fluxo metodológico}
+  \centering
+  \figuraoumarcador{fluxograma_metodologico.png}{width=0.96\textwidth,height=0.77\textheight,keepaspectratio}
+  \fonte{Elaboração própria (2026).}
+\end{frame}
+
+\begin{frame}{Índice de convergência espacial}
+  \vspace{0.25cm}
+  \begin{columns}[c,onlytextwidth]
+    \column{0.52\textwidth}
+      \begin{equation*}
+        IC = \frac{A_{CAR \cap NAT}}{A_{CAR,\, válida}} \times 100
+      \end{equation*}
+      \vspace{0.25cm}
+      \begin{itemize}
+        \item $A_{CAR \cap NAT}$: pixels naturais dentro da vegetação declarada
+        \item $A_{CAR,\, válida}$: pixels válidos do MapBiomas dentro da máscara
+      \end{itemize}
+    \column{0.42\textwidth}
+      \textbf{Decisões metodológicas}
+      \begin{itemize}
+        \item grade de 30 m do MapBiomas
+        \item centro do pixel como critério
+        \item união dos polígonos para evitar dupla contagem
+        \item classes naturais conferidas na legenda da Coleção 11
+      \end{itemize}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Controle de qualidade geométrica}
+  \vspace{0.15cm}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.31\textwidth}
+      \numero{AzulMedio}{3.590}\par
+      feições de imóveis após excluir cadastros cancelados
+    \column{0.31\textwidth}
+      \numero{Laranja}{98}\par
+      registros pertencentes a grupos de geometrias idênticas
+    \column{0.31\textwidth}
+      \numero{Verde}{3.588}\par
+      feições poligonais mantidas após o reparo
+  \end{columns}
+
+  \vspace{0.65cm}
+  Quatro geometrias eram inválidas. O reparo preservou duas como \textit{MultiPolygon}. Duas se tornaram \textit{GeometryCollection} e saíram da camada poligonal. As duplicidades permaneceram para conservar a rastreabilidade cadastral.
+
+  \vspace{0.25cm}
+  \textbf{A redução de 3.590 para 3.588 decorreu das geometrias incompatíveis, não das duplicidades.}
+\end{frame}
+
+\begin{frame}{Vegetação nativa declarada}
+  \centering
+  \figuraoumarcador{mapa_02_vegetacao_declarada.png}{width=0.96\textwidth,height=0.78\textheight,keepaspectratio}
+  \fonte{SICAR e AESA. Elaboração própria (2026).}
+\end{frame}
+
+\begin{frame}{Área declarada sem dupla contagem}
+  \vspace{0.30cm}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.31\textwidth}
+      \numero{AzulMedio}{8.278,86 ha}\par
+      somatório individual dos polígonos
+    \column{0.31\textwidth}
+      \numero{Verde}{8.224,30 ha}\par
+      área espacialmente distinta após a união
+    \column{0.31\textwidth}
+      \numero{Laranja}{54,56 ha}\par
+      área sobreposta que deixaria de ser contada uma única vez
+  \end{columns}
+
+  \vspace{0.72cm}
+  A vegetação declarada espacialmente distinta correspondeu a \textbf{19,08\%} da área conjunta dos imóveis analisados.
+
+  \vspace{0.25cm}
+  O recorte reuniu \textbf{1.974 registros de imóveis} e \textbf{279 polígonos de vegetação nativa declarada}.
+\end{frame}
+
+\begin{frame}{Resultado do índice de convergência}
+  \begin{columns}[c,onlytextwidth]
+    \column{0.43\textwidth}
+      \centering
+      {\fontsize{46}{50}\selectfont\bfseries\color{Verde}63,66\%}\par
+      \vspace{0.18cm}
+      da área declarada rasterizada coincidiu com classes naturais
+    \column{0.52\textwidth}
+      \begin{tikzpicture}
+        \begin{axis}[
+          xbar stacked,
+          xmin=0,xmax=100,
+          width=\linewidth,height=2.7cm,
+          axis lines=none,
+          ticks=none,
+          bar width=23pt,
+          nodes near coords,
+          every node near coord/.append style={font=\bfseries\small,text=white},
+          point meta=explicit symbolic
+        ]
+          \addplot[fill=Verde,draw=none] coordinates {(63.66,0) [63,66\%]};
+          \addplot[fill=Laranja,draw=none] coordinates {(36.34,0) [36,34\%]};
+        \end{axis}
+      \end{tikzpicture}
+      \vspace{0.18cm}
+      \begin{tabular}{@{}lr@{}}
+        Classes naturais coincidentes & \textbf{5.235,93 ha} \\
+        Classes não naturais & \textbf{2.988,81 ha} \\
+        Área rasterizada válida & \textbf{8.224,74 ha} \\
+      \end{tabular}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Distribuição espacial da convergência}
+  \centering
+  \figuraoumarcador{mapa_03_convergencia_car_mapbiomas.png}{width=0.96\textwidth,height=0.78\textheight,keepaspectratio}
+  \fonte{SICAR e MapBiomas Coleção 11. Elaboração própria (2026).}
+\end{frame}
+
+\begin{frame}{Classes associadas às divergências}
+  \begin{columns}[c,onlytextwidth]
+    \column{0.66\textwidth}
+      \begin{tikzpicture}
+        \begin{axis}[
+          xbar,
+          width=\linewidth,height=6.2cm,
+          xmin=0,xmax=1350,
+          xlabel={Área dentro da vegetação declarada (ha)},
+          symbolic y coords={Demais classes,Outras lavouras,Cana-de-açúcar,Mosaico de usos,Pastagem},
+          ytick=data,
+          axis x line*=bottom,
+          axis y line*=left,
+          tick label style={font=\small},
+          label style={font=\small},
+          grid=major,
+          grid style={CinzaClaro},
+          nodes near coords,
+          nodes near coords align={horizontal},
+          every node near coord/.append style={font=\scriptsize,color=AzulEscuro},
+          enlarge y limits=0.13
+        ]
+          \addplot[fill=Laranja,draw=none] coordinates {
+            (75.06,Demais classes)
+            (174.96,Outras lavouras)
+            (334.71,Cana-de-açúcar)
+            (1197.27,Mosaico de usos)
+            (1206.81,Pastagem)
+          };
+        \end{axis}
+      \end{tikzpicture}
+    \column{0.30\textwidth}
+      Pastagem e mosaico de usos somaram \textbf{2.404,08 ha}.
+
+      \vspace{0.45cm}
+      Essas classes concentraram \textbf{80,44\%} da área divergente.
+
+      \vspace{0.45cm}
+      A divergência indica prioridade para verificação, sem comprovar irregularidade.
+  \end{columns}
+  \fonte{MapBiomas Coleção 11 e SICAR. Elaboração própria (2026).}
+\end{frame}
+
+\begin{frame}{Interpretação e limitações}
+  \vspace{0.20cm}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.48\textwidth}
+      \textbf{O índice permite}
+      \begin{itemize}
+        \item quantificar a concordância espacial
+        \item localizar áreas divergentes
+        \item orientar análises complementares
+        \item comparar resultados sob o mesmo critério
+      \end{itemize}
+    \column{0.48\textwidth}
+      \textbf{O índice não determina}
+      \begin{itemize}
+        \item regularidade ambiental do imóvel
+        \item causa da divergência
+        \item acurácia temática das duas bases
+        \item condição da cobertura na data da declaração
+      \end{itemize}
+  \end{columns}
+
+  \vspace{0.40cm}
+  Bordas, fragmentos estreitos, diferenças temporais e a resolução de 30 m influenciam a comparação.
+\end{frame}
+
+\begin{frame}{Conclusões}
+  \vspace{0.15cm}
+  \begin{itemize}
+    \item A união geométrica evitou a dupla contagem de \textbf{54,56 ha}.
+    \item O índice de convergência espacial atingiu \textbf{63,66\%}.
+    \item Pastagem e mosaico de usos concentraram a maior parte das divergências.
+    \item O MapBiomas identificou \textbf{3.012,30 ha} de classes naturais dentro dos imóveis e fora das declarações analisadas.
+    \item Os resultados apoiam a seleção de áreas para exames posteriores pela administração ambiental.
+  \end{itemize}
+
+  \vspace{0.45cm}
+  \textbf{Síntese:} a integração entre CAR e MapBiomas oferece um diagnóstico territorial reproduzível, desde que as limitações das bases orientem a interpretação.
+\end{frame}
+
+\begin{frame}{Reprodutibilidade}
+  \vspace{0.25cm}
+  Os códigos, o notebook Jupyter compatível com Google Colab, as configurações e o teste sintético estão disponíveis em:
+
+  \vspace{0.35cm}
+  \begin{center}
+    {\large\bfseries\color{AzulMedio}\url{https://github.com/Emanuel2806PB/gramame-car-mapbiomas}}
+  \end{center}
+
+  \vspace{0.45cm}
+  O repositório permite repetir a análise com os dados públicos obtidos no SICAR, na AESA, no IBGE e no MapBiomas.
+
+  \vspace{0.55cm}
+  {\color{AzulMedio}\rule{\textwidth}{1pt}}\par
+  \vspace{0.35cm}
+  {\centering\Large\bfseries Obrigado\par}
+\end{frame}
+
+\end{document}
