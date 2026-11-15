@@ -37,10 +37,10 @@ Foram integradas quatro fontes públicas de dados geoespaciais. Os dados do SICA
 \setlength{\tabcolsep}{5pt}
 
 \begin{tabularx}{\textwidth}{
->{\RaggedRight\arraybackslash}p{2.9cm}
->{\RaggedRight\arraybackslash}p{1.9cm}
+>{\RaggedRight\arraybackslash}p{2.7cm}
+>{\RaggedRight\arraybackslash}p{2.2cm}
 >{\RaggedRight\arraybackslash}X
->{\centering\arraybackslash}p{2.0cm}
+>{\centering\arraybackslash}p{1.9cm}
 }
 \toprule
 
@@ -168,11 +168,11 @@ A vegetação nativa declarada no CAR foi convertida para o formato raster, util
 O índice de convergência espacial (IC) foi calculado pela Equação~\ref{eq:ic}:
 
 \begin{equation}
-IC = \frac{A_{CAR \cap NAT}}{A_{CAR, válida}} \times 100
+IC = \frac{A_{\mathrm{CAR} \cap \mathrm{NAT}}}{A_{\text{CAR, válida}}} \times 100
 \label{eq:ic}
 \end{equation}
 
-\noindent em que $A_{CAR \cap NAT}$ corresponde à área de vegetação declarada coincidente com as classes naturais do MapBiomas, e $A_{CAR, válida}$ representa a área dos pixels válidos do MapBiomas localizados dentro da máscara das declarações. O índice foi expresso em porcentagem.
+\noindent em que $A_{\mathrm{CAR} \cap \mathrm{NAT}}$ corresponde à área de vegetação declarada coincidente com as classes naturais do MapBiomas, e $A_{\text{CAR, válida}}$ representa a área dos pixels válidos do MapBiomas localizados dentro da máscara das declarações. O índice foi expresso em porcentagem.
 
 Também foram quantificadas as áreas declaradas que não coincidiram com classes naturais e as áreas de cobertura natural identificadas pelo MapBiomas dentro dos imóveis rurais, mas fora dos polígonos de vegetação declarada. Na conversão dos vetores para raster, foi adotado o critério do centro do pixel, mantendo a resolução espacial de 30 m.
 
