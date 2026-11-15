@@ -152,6 +152,68 @@ Cálculos matriciais e elaboração de gráficos auxiliares \\
 \endgroup
 \end{table}
 
+Para explicitar a participação do QGIS no fluxo metodológico, o Quadro~\ref{qua:qgis} reúne os recursos empregados na conferência das bases, na inspeção dos resultados e na composição cartográfica. As operações quantitativas e o cálculo dos indicadores foram automatizados em Python; no QGIS, as funções de geoprocessamento foram utilizadas como apoio à verificação das etapas e à preparação dos produtos cartográficos.
+
+\begin{quadro}[H]
+\centering
+\caption{Recursos e funções do QGIS empregados no estudo}
+\label{qua:qgis}
+
+\begingroup
+\small
+\SingleSpacing
+\renewcommand{\arraystretch}{1.35}
+\setlength{\tabcolsep}{5pt}
+
+\begin{tabularx}{\textwidth}{
+>{\RaggedRight\arraybackslash}p{3.4cm}
+>{\RaggedRight\arraybackslash}X
+>{\RaggedRight\arraybackslash}p{3.0cm}
+}
+\toprule
+\textbf{Recurso ou função} & \textbf{Aplicação no estudo} & \textbf{Etapa metodológica} \\
+\midrule
+
+Propriedades da camada e painel de informações &
+Conferência do sistema de referência, extensão espacial, campos e quantidade de feições &
+Inventário e controle estrutural \\
+
+Verificar validade e corrigir geometrias &
+Inspeção das geometrias inválidas e conferência das correções aplicadas aos vetores &
+Controle geométrico \\
+
+Reprojetar camada &
+Conferência da padronização para SIRGAS 2000 / UTM zona 25S (EPSG:31985) &
+Harmonização espacial \\
+
+Recortar &
+Verificação do recorte das camadas pelo limite da bacia hidrográfica do rio Gramame &
+Preparação dos dados \\
+
+Dissolver &
+Conferência da união dos polígonos de vegetação declarada e da eliminação da dupla contagem espacial &
+Controle de áreas \\
+
+Rasterizar (vetor para raster) &
+Verificação da conversão da vegetação declarada para a grade de 30 m do MapBiomas &
+Cruzamento raster-vetor \\
+
+Simbologia categorizada e transparência &
+Representação das classes naturais, não naturais e das áreas de convergência e divergência &
+Análise visual \\
+
+Layout de impressão &
+Inserção de título, legenda, escala, orientação, coordenadas, fonte e autoria nos mapas &
+Produção cartográfica \\
+
+\bottomrule
+\end{tabularx}
+
+\vspace{0.20cm}
+\fontefigura{Elaboração própria (2026).}
+\endgroup
+\end{quadro}
+
 \subsection{Preparação e controle de qualidade}
 
 As camadas foram recortadas conforme os limites da bacia hidrográfica do rio Gramame. Em seguida, foram verificadas a existência de geometrias vazias e inválidas. A função \textit{make valid} foi aplicada às geometrias inválidas, e a camada de imóveis foi restringida aos tipos poligonais \textit{Polygon} e \textit{MultiPolygon}, compatíveis com as operações de área empregadas no estudo.
